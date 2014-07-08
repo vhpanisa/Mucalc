@@ -32,9 +32,13 @@
 			var lvl = +$('aLevel').value;
 			var hp = 30+(lvl-1)+vit*2;
 			var mp = (lvl-1)*2+ene*2;
-			var sd = ((str+agi+vit+ene) * 1.2 + def / 2 + lvl*lvl / 30) | 0;
 			var def = (agi/4) | 0;
 			var speed = (agi/10) | 0;
+			var sd = ((str+agi+vit+ene) * 1.2 + def / 2 + lvl*lvl/ 30) | 0;
+			var pvmdr = (agi/3) | 0;
+			var pvmar = (lvl*5+(agi*3)/2+str/4) | 0;
+			var pvpdr = (lvl*2+agi*0.25) | 0;
+			var pvpar = (lvl*3+agi*4) | 0;
 
 			$('oMinDmg').value = (ene / 9) | 0;
 			$('oMaxDmg').value = (ene / 4) | 0;
@@ -43,6 +47,10 @@
 			$('oSD').value = sd;
 			$('oDef').value = def;
 			$('oSpeed').value = speed;
+			$('oPvmDr').value = pvmdr;
+			$('oPvmAr').value = pvmar;
+			$('oPvpDr').value = pvpdr;
+			$('oPvpAr').value = pvpar;
 		}
 	</script>
 </head>
@@ -106,6 +114,18 @@
 					</tr>
 					<tr>
 						<td>Defesa</td><td><input id="oDef" type="text" disabled="true"></td>
+					</tr>
+					<tr>
+						<td>Taxa de Defesa(PvM)</td><td><input id="oPvmDr" type="text" disabled="true"></td>
+					</tr>
+					<tr>
+						<td>Taxa de Ataque(PvM)</td><td><input id="oPvmAr" type="text" disabled="true"></td>
+					</tr>
+					<tr>
+						<td>Taxa de Defesa(PvP)</td><td><input id="oPvpDr" type="text" disabled="true"></td>
+					</tr>
+					<tr>
+						<td>Taxa de Ataque(PvP)</td><td><input id="oPvpAr" type="text" disabled="true"></td>
 					</tr>
 				</tr>
 			</table>
