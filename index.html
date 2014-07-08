@@ -30,6 +30,8 @@
 			var vit = +$('aVit').value;
 			var ene = +$('aEne').value;
 			var lvl = +$('aLevel').value;
+			var reset = +$('aResets').value;
+
 			var hp = 30+(lvl-1)+vit*2;
 			var mp = (lvl-1)*2+ene*2;
 			var def = (agi/4) | 0;
@@ -40,6 +42,7 @@
 			var pvpdr = (lvl*2+agi*0.25) | 0;
 			var pvpar = (lvl*3+agi*4) | 0;
 
+			$('oPontos').value = 100 + (280 * reset) + (6 * (lvl-1)) - (str+agi+vit+ene);
 			$('oMinDmg').value = (ene / 9) | 0;
 			$('oMaxDmg').value = (ene / 4) | 0;
 			$('oHP').value = hp;
@@ -54,10 +57,10 @@
 		}
 	</script>
 </head>
-<body>
+<body onkeyup="refresh()">
 	<div style="display:none">
-		<input list="browsers" name="classe">
-		<datalist id="browsers">
+		<input list="classes" name="classe">
+		<datalist id="classes">
 			<option value="BK"/>
 			<option value="SM"/>
 			<option value="ME"/>
@@ -73,28 +76,35 @@
 				<legend>Atributos</legend>
 				<table>
 					<tr>
-						<td>Level</td><td><input id="aLevel" type="text"></td>
+						<td>Resets</td>
+						<td><input id="aResets" value="0" type="text"></td>
 					</tr>
 					<tr>
-						<td>Força</td><td><input id="aStr" type="text"></td>
+						<td>Level</td><td><input value="1" id="aLevel" type="text"></td>
 					</tr>
 					<tr>
-						<td>Agilidade</td><td><input id="aAgi" type="text"></td>
+						<td>Força</td><td><input value="25" id="aStr" type="text"></td>
 					</tr>
 					<tr>
-						<td>Vitalidade</td><td><input id="aVit" type="text"></td>
+						<td>Agilidade</td><td><input value="25" id="aAgi" type="text"></td>
 					</tr>
 					<tr>
-						<td>Energia</td><td><input id="aEne" type="text"></td>
+						<td>Vitalidade</td><td><input value="25" id="aVit" type="text"></td>
+					</tr>
+					<tr>
+						<td>Energia</td><td><input value="25" id="aEne" type="text"></td>
 					</tr>
 				</table>
-				<input type="submit" onclick="refresh()">
 			</fieldset>
 			<fieldset>
 				<legend>Output</legend>
 				<table>
 					<tr>
-						<td>Wiz Dmg Mínimo</td><td>Wiz Dmg Máximo</td>
+						<td>Pontos Disponíveis</td>
+						<td><input id="oPontos" type="text" disabled="true"></td>
+					</tr>
+					<tr>
+						<td>Mínimo</td><td>Máximo</td>
 					</tr>
 					<tr>
 						<td><input id="oMinDmg" type="text" disabled="true" /></td>
