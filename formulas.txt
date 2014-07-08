@@ -1,0 +1,112 @@
+BK
+==
+
+Min dmg = str/6
+Max dmg = str/4
+Combo base = (str+agi+ene)/2
+Speed = agi/15
+Defense = agi/3
+PvM defense rate = agi/3
+PvM attack rate = lvl*5+(agi*3)/2+str/4
+PvP defense rate = lvl*2+agi*0.5
+PvP attack rate = lvl*3+agi*4.5
+HP = 35+(lvl-1)*2+vit*3
+Mana = 10+(lvl-1)*0.5+ene
+Mana regen = mana/27.5
+SD = (str+agi+vit+ene)*1.2+defense/2+(lvl*lvl)/30
+AG = ene+vit*0.3+agi*0.2+str*0.15
+AG regen = 2+AG/20
+Skill % = 200+ene/10
+Fortitude % = 12+vit/100+ene/20
+Fenrir base min dmg = 45+str/3+agi/5+vit/5+ene/6
+Fenrir base max dmg = 75+str/3+agi/5+vit/5+ene/
+
+SM
+==
+
+Min wiz dmg = ene/9
+Max wiz dmg = ene/4
+Speed = agi/10
+Defense = agi/4
+PvM defense rate = agi/3
+PvM attack rate = lvl*5+(agi*3)/2+str/4
+PvP defense rate = lvl*2+agi*0.25
+PvP attack rate = lvl*3+agi*4
+HP = 30+(lvl-1)+vit*2
+Mana = (lvl-1)*2+ene*2
+Mana regen = mana/27.5
+SD = (str+agi+vit+ene)*1.2+defense/2+(lvl*lvl)/30
+AG = ene*0.2+vit*0.3+agi*0.4+str*0.2
+AG regen = 2+AG/33.3
+Soul barrier % = 10+agi/50+ene/200
+Nova max spell dmg = 1320+str/2
+Fenrir base min dmg = 60+str/5+agi/5+vit/7+ene/3
+Fenrir base max dmg = 90+str/5+agi/5+vit/7+ene/3
+
+ME
+==
+
+Min dmg = str/14+agi/7
+Max dmg = str/8+agi/4
+Speed = agi/50
+Defense = agi/10
+PvM defense rate = agi/4
+PvM attack rate = lvl*5+(agi*3)/2+str/4
+PvP defense rate = lvl*2+agi*0.1
+PvP attack rate = lvl*3+agi*0.6
+HP = 40+(lvl-1)+vit*2
+Mana = 6+(lvl*1.5)+(ene*1.5)
+Mana regen = mana/27.5
+SD = (str+agi+vit+ene)*1.2+defense/2+(lvl*lvl)/30
+AG = ene*0.2+vit*0.3+agi*0.2+str*0.3
+AG regen = 2+AG/33.33
+Dmg buff = ene/7+3
+Def buff = ene/8+2
+Heal = ene/5+5
+
+MG
+==
+
+Min dmg = str/6+ene/12
+Max dmg = str/4+ene/8
+Min wiz dmg = ene/9
+Max wiz dmg = ene/4
+Speed = agi/15
+Defense = agi/5
+PvM defense rate = agi/3
+PvM attack rate = lvl*5+(agi*3)/2+str/4
+PvP defense rate = lvl*2+agi*0.25
+PvP attack rate = lvl*3+agi*3.5
+HP = 58+(lvl-1)+vit*2
+Mana = 8+(lvl-1)+ene*2
+Mana regen = mana/27.5
+SD = (str+agi+vit+ene)*1.2+defense/2+(lvl*lvl)/30
+AG = ene*0.15+vit*0.3+agi*0.25+str*0.2
+AG regen = 1.9+AG/33
+
+DL
+==
+
+Min dmg = str/7+ene/14
+Max dmg = str/5+ene/10
+Speed = agi/10
+Defense = agi/7
+PvM defense rate = agi/7
+PvM attack rate = lvl*5+(agi*5)/2+str/6+cmd/10
+PvP defense rate = lvl*2+agi*0.5
+PvP attack rate = lvl*3+agi*4
+HP = 50+(lvl-1)*1.5+vit*2
+Mana = 40+(lvl-1)+(ene-15)*1.5
+Mana regen = mana/27.5
+SD = (str+agi+vit+ene+cmd)*1.2+defense/2+(lvl*lvl)/30
+AG = ene*0.15+vit*0.1+agi*0.2+str*0.3+cmd*0.3
+AG regen = 1.9+AG/33
+Skill % = 200+ene/20
+Critical dmg = cmd/25+str/30
+Fireburst bonus min dmg = 100+str/25+ene/50
+Fireburst bonus max dmg = 150+str/25+ene/50
+Horse bonus dmg = 100+horseLvl*10+lvl*2.5+str/10+cmd/5
+Raven speed = 20+(ravenLvl*4)/5+cmd/50
+Raven min dmg = 180+ravenLvl*15+cmd/8
+Raven max dmg = 200+ravenLvl*15+cmd/4
+Guild size = lvl/10+cmd/10

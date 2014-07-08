@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>	Calc Mu C.A</title>
+	<link rel="stylesheet" href="mucalc.css">
+	<script type="text/javascript">
+		var $ = function( id ) { return document.getElementById( id ); };
+		function addTab(){
+			var newTabID = $('tabs').getElementsByTagName('section').length;
+			newTabID = 'tab' + (newTabID+1);
+			var tabs = $("tabs");
+			var newTab = document.createElement("section");
+			newTab.id = newTabID;
+			newTab.innerHTML =
+			[
+			'<h2><a href="',
+			'#' + newTabID,
+			'">',
+			'Tab 1',
+			'</a></h2>',
+			'<p>This content appears on tab 2.</p>',
+			].join('\n');
+			tabs.appendChild(newTab);
+		}
+
+		function refresh(){
+			var str = +$('aStr').value;
+			var agi = +$('aAgi').value;
+			var vit = +$('aVit').value;
+			var ene = +$('aEne').value;
+			var lvl = +$('aLevel').value;
+			var defense = (agi/4) | 0;
+
+			$('oMinDmg').value = (ene / 9) | 0;
+			$('oMaxDmg').value = (ene / 4) | 0;			
+			$('oSD').value = ((str+agi+vit+ene) * 1.2 + defense / 2 + lvl*lvl / 30) | 0;
+		}
+	</script>
+</head>
+<body>
+	<input list="browsers" name="classe">
+	<datalist id="browsers">
+		<option value="BK"/>
+		<option value="SM"/>
+		<option value="ME"/>
+		<option value="MG"/>
+		<option value="DL"/>
+	</datalist>
+	<input type="submit" value="Adicionar" onclick="addTab()" />
+	<article class="tabs" id="tabs">
+		<section id="tab1">
+			<h2><a href="#tab1">SM</a></h2>
+			<fieldset>
+				<legend>Atributos</legend>
+				<table>
+					<tr>
+						<td>Level</td><td><input id="aLevel" type="text"></td>
+					</tr>
+					<tr>
+						<td>Força</td><td><input id="aStr" type="text"></td>
+					</tr>
+					<tr>
+						<td>Agilidade</td><td><input id="aAgi" type="text"></td>
+					</tr>
+					<tr>
+						<td>Vitalidade</td><td><input id="aVit" type="text"></td>
+					</tr>
+					<tr>
+						<td>Energia</td><td><input id="aEne" type="text"></td>
+					</tr>
+				</table>
+				<input type="submit" onclick="refresh()">
+			</fieldset>
+			<fieldset>
+				<legend>Output</legend>
+				<table>
+					<tr>
+						<td>Wiz Dmg Mínimo</td><td>Wiz Dmg Máximo</td>
+					</tr>
+					<tr>
+						<td><input id="oMinDmg" type="text" disabled="true" /></td>
+						<td><input id="oMaxDmg" type="text" disabled="true" /></td>
+					</tr>
+					<tr>
+						<td>SD</td><td><input id="oSD" type="text" disabled="true"></td>
+					</tr>
+				</tr>
+			</table>
+		</fieldset>			
+	</section>
+</article>
+</body>
+</html>
