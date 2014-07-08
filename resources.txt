@@ -24,18 +24,18 @@ Fenrir base max dmg = 75+str/3+agi/5+vit/5+ene/
 SM
 ==
 
-Min wiz dmg = ene/9
-Max wiz dmg = ene/4
-Speed = agi/10
-Defense = agi/4
+OK Min wiz dmg = ene/9
+OK Max wiz dmg = ene/4
+OK Speed = agi/10
+OK Defense = agi/4
 PvM defense rate = agi/3
 PvM attack rate = lvl*5+(agi*3)/2+str/4
 PvP defense rate = lvl*2+agi*0.25
 PvP attack rate = lvl*3+agi*4
-HP = 30+(lvl-1)+vit*2
-Mana = (lvl-1)*2+ene*2
+OK HP = 30+(lvl-1)+vit*2
+OK Mana = (lvl-1)*2+ene*2
 Mana regen = mana/27.5
-SD = (str+agi+vit+ene)*1.2+defense/2+(lvl*lvl)/30
+OK SD = (str+agi+vit+ene)*1.2+defense/2+(lvl*lvl)/30
 AG = ene*0.2+vit*0.3+agi*0.4+str*0.2
 AG regen = 2+AG/33.3
 Soul barrier % = 10+agi/50+ene/200
@@ -110,3 +110,26 @@ Raven speed = 20+(ravenLvl*4)/5+cmd/50
 Raven min dmg = 180+ravenLvl*15+cmd/8
 Raven max dmg = 200+ravenLvl*15+cmd/4
 Guild size = lvl/10+cmd/10
+
+Bug de Agilidade SM
+===================
+
+00025 ~ 04200 = não buga
+04300 ~ 04400 = buga (mas sai com uniria)
+04500 ~ 05700 = não buga
+05800 ~ 06500 = buga (mas sai com uniria)
+06600 ~ 08200 = não buga
+08300 ~ 09900 = buga (mas sai com uniria)
+10000 ~ 10600 = buga (mas não sai com uniria)
+10700 = buga (mas sai com uniria)
+10800 ~ 13200 = não buga
+13300 ~ 15600 = buga (mas sai com uniria)
+15700 ~ 23100 = buga (mas não sai com uniria)
+23200 = buga (mas sai com uniria)
+23300 ~ 28200 = não buga
+28300 ~ 32500 = buga (mas sai com uniria)
+
+obs: valores testados de 100 em 100
+obs2: testados com uma staff com 30 de velocidade
+
+bug d energia, sem peças de mana = 32.368

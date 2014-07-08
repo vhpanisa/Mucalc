@@ -30,24 +30,34 @@
 			var vit = +$('aVit').value;
 			var ene = +$('aEne').value;
 			var lvl = +$('aLevel').value;
-			var defense = (agi/4) | 0;
+			var hp = 30+(lvl-1)+vit*2;
+			var mp = (lvl-1)*2+ene*2;
+			var sd = ((str+agi+vit+ene) * 1.2 + def / 2 + lvl*lvl / 30) | 0;
+			var def = (agi/4) | 0;
+			var speed = (agi/10) | 0;
 
 			$('oMinDmg').value = (ene / 9) | 0;
-			$('oMaxDmg').value = (ene / 4) | 0;			
-			$('oSD').value = ((str+agi+vit+ene) * 1.2 + defense / 2 + lvl*lvl / 30) | 0;
+			$('oMaxDmg').value = (ene / 4) | 0;
+			$('oHP').value = hp;
+			$('oMP').value = mp;
+			$('oSD').value = sd;
+			$('oDef').value = def;
+			$('oSpeed').value = speed;
 		}
 	</script>
 </head>
 <body>
-	<input list="browsers" name="classe">
-	<datalist id="browsers">
-		<option value="BK"/>
-		<option value="SM"/>
-		<option value="ME"/>
-		<option value="MG"/>
-		<option value="DL"/>
-	</datalist>
-	<input type="submit" value="Adicionar" onclick="addTab()" />
+	<div style="display:none">
+		<input list="browsers" name="classe">
+		<datalist id="browsers">
+			<option value="BK"/>
+			<option value="SM"/>
+			<option value="ME"/>
+			<option value="MG"/>
+			<option value="DL"/>
+		</datalist>
+		<input type="submit" value="Adicionar" onclick="addTab()" />
+	</div>
 	<article class="tabs" id="tabs">
 		<section id="tab1">
 			<h2><a href="#tab1">SM</a></h2>
@@ -84,6 +94,18 @@
 					</tr>
 					<tr>
 						<td>SD</td><td><input id="oSD" type="text" disabled="true"></td>
+					</tr>
+					<tr>
+						<td>HP</td><td><input id="oHP" type="text" disabled="true"></td>
+					</tr>
+					<tr>
+						<td>MP</td><td><input id="oMP" type="text" disabled="true"></td>
+					</tr>
+					<tr>
+						<td>Velocidade de Ataque</td><td><input id="oSpeed" type="text" disabled="true"></td>
+					</tr>
+					<tr>
+						<td>Defesa</td><td><input id="oDef" type="text" disabled="true"></td>
 					</tr>
 				</tr>
 			</table>
