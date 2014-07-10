@@ -80,3 +80,16 @@ article.tabs section h2
 	-o-transition: all 500ms ease;
 	transition: all 500ms ease;
 }
+
+input[type="text"],
+input[type="number"]
+{
+	width: 50px;
+	vertical-align: top;	
+}
+
+select
+{
+	width: 54px;
+	vertical-align: top;
+}

@@ -4,165 +4,17 @@
 	<meta charset="utf-8"> 
 	<title>	Calc Mu C.A</title>
 	<link rel="stylesheet" href="mucalc.css">
-	<script type="text/javascript">
-		var $ = function( id ) { return document.getElementById( id ); };
-
-		function sanitycheck(){
-
-			if (+$('iStr').value > 32500 || +$('iStr').value < 1){
-				$('iStr').style['background-color'] = 'red';
-				return false;
-			}
-			$('iStr').style['background-color'] = '';
-
-			if (+$('iAgi').value > 32500 || +$('iAgi').value < 1){
-				$('iAgi').style['background-color'] = 'red';
-				return false;
-			}
-			$('iAgi').style['background-color'] = '';
-
-			if (+$('iVit').value > 32500 || +$('iVit').value < 1){
-				$('iVit').style['background-color'] = 'red';
-				return false;
-			}
-			$('iVit').style['background-color'] = '';
-
-			if (+$('iEne').value > 32500 || +$('iEne').value < 1){
-				$('iEne').style['background-color'] = 'red';
-				return false;
-			}
-			$('iEne').style['background-color'] = '';
-
-			if (+$('iLevel').value > 400 || +$('iLevel').value < 1){
-				$('iLevel').style['background-color'] = 'red';
-				return false;
-			}
-			$('iLevel').style['background-color'] = '';
-
-			if (+$('iResets').value > 500 || +$('iResets').value < 0){
-				$('iResets').style['background-color'] = 'red';
-				return false;
-			}
-			$('iResets').style['background-color'] = '';
-
-			if (+$('iSTAsa').value > 2 || +$('iSTAsa').value < 0){
-				$('iSTAsa').style['background-color'] = 'red';
-				return false;
-			}
-			$('iSTAsa').style['background-color'] = '';
-
-			if (+$('iSLAsa').value > 13 || +$('iSLAsa').value < 0){
-				$('iSLAsa').style['background-color'] = 'red';
-				return false;
-			}
-			$('iSLAsa').style['background-color'] = '';
-
-			return true;
-		}
-
-		function addTab(){
-			var newTabID = $('tabs').getElementsByTagName('section').length;
-			newTabID = 'tab' + (newTabID+1);
-			var tabs = $("tabs");
-			var newTab = document.createElement("section");
-			newTab.id = newTabID;
-			newTab.innerHTML =
-			[
-			'<h2><a href="',
-			'#' + newTabID,
-			'">',
-			'Tab 1',
-			'</a></h2>',
-			'<p>This content appears on tab 2.</p>',
-			].join('\n');
-			tabs.appendChild(newTab);
-		}
-
-		function refresh(){
-			if (!sanitycheck()) return;
-			var str = +$('iStr').value;
-			var agi = +$('iAgi').value;
-			var vit = +$('iVit').value;
-			var ene = +$('iEne').value;
-			var lvl = +$('iLevel').value;
-			var reset = +$('iResets').value;
-			var pvida = +$('iSVida').value;
-			var staff = (+$('iSStaff').value) / 100;
-			var tasa = +$('iSTAsa').value;
-			var lasa = +$('iSLAsa').value;
-			var imp = +$('iSCImp').checked;
-			var addstaff = +$('iSCStaff').checked;
-			var addpendant = +$('iSCPendant').checked;			
-
-			var exreset = 0;
-			if (reset > 250){
-				exreset = reset - 250;
-				reset = 250;
-			}
-
-			var pontos = 100 + (280 * reset) + (exreset * 12) + (6 * (lvl-1)) - (str+agi+vit+ene);
-			var hp = 30+(lvl-1)+vit*2;
-
-			for (var i = 0; i < pvida; i++) {
-				hp = (hp*1.05) | 0;
-			}
-
-			var mp = (lvl-1)*2+ene*2;
-			var ag = ((ene*0.2)+(vit*0.3)+(agi*0.4)+(str*0.2)) | 0 ;
-			var def = (agi/4) | 0;
-			var speed = (agi/10) | 0;
-			var sd = ((str+agi+vit+ene) * 1.2 + def / 2 + lvl*lvl/ 30) | 0;
-
-			var asa = 0;
-			if(lasa != 0){
-				switch(tasa){
-					case 1:
-					tasa = 2;
-					asa = 14;
-					break;
-					case 2:
-					tasa = 1;
-					asa = 33;
-					break;
-				}
-				asa += (tasa * lasa); asa /= 100; ;
-			}
-
-			var chkdmg = (1+(imp*0.3)) * (1+(addpendant*0.02)) * (1+(addstaff*0.02));
-			var mindmg = (ene / 9) * (1+staff) * (1+asa); mindmg *= chkdmg; mindmg |= 0;
-			var maxdmg = (ene / 4) * (1+staff) * (1+asa); maxdmg *= chkdmg; maxdmg |= 0;
-			var pvmdr = (agi/3) | 0;
-			var pvmar = (lvl*5+(agi*3)/2+str/4) | 0;
-			var pvpdr = (lvl*2+agi*0.25) | 0;
-			var pvpar = (lvl*3+agi*4) | 0;
-
-			$('oPontos').value = pontos;
-			$('oMinDmg').value = mindmg;
-			$('oMaxDmg').value = maxdmg;
-			$('oHP').value = hp;
-			$('oMP').value = mp;
-			$('oAG').value = ag;
-			$('oSD').value = sd;
-			$('oDef').value = def;
-			$('oSpeed').value = speed;
-			$('oPvmDr').value = pvmdr;
-			$('oPvmAr').value = pvmar;
-			$('oPvpDr').value = pvpdr;
-			$('oPvpAr').value = pvpar;
-
-		}
-	</script>
+	<script src="mucalc.js" type="text/javascript"></script>
 </head>
 <body onkeyup="refresh()" onclick="refresh()">
 	<div style="display:none">
-		<input list="classes" name="classe">
-		<datalist id="classes">
+		<select id="classes">
 			<option value="BK"/>
 			<option value="SM"/>
 			<option value="ME"/>
 			<option value="MG"/>
 			<option value="DL"/>
-		</datalist>
+		</select>
 		<input type="submit" value="Adicionar" onclick="addTab()" />
 	</div>
 	<article class="tabs" id="tabs">
@@ -197,68 +49,79 @@
 						<td>Dano Extra Staff (%)</td><td><input value="0" id="iSStaff" type="text"></td>
 					</tr>
 					<tr>
-						<td>Asa Level(1 ou 2)</td><td><input value="0" id="iSTAsa" type="text"></td>
-					</tr>
-					<tr>
-						<td>Nível da asa(1 ~ 13)</td><td><input value="0" id="iSLAsa" type="text"></td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<label><input id="iSCImp" type="checkbox"/>Imp (30%)</label>
-							<label><input id="iSCStaff" type="checkbox"/>Staff (2%)</label>
-							<label><input id="iSCPendant" type="checkbox"/>Pendant (2%)</label>
+						<td>
+							Asa
 						</td>
-					</tr>
-				</table>
-			</fieldset>
-			<fieldset>
-				<legend>Output</legend>
-				<table>
-					<tr>
-						<td>Pontos Disponíveis</td>
-						<td><input id="oPontos" type="text" disabled="true"></td>
-					</tr>
-					<tr>
-						<td>Dano Mínimo</td><td>Dano Máximo</td>
-					</tr>
-					<tr>
-						<td><input id="oMinDmg" type="text" disabled="true" /></td>
-						<td><input id="oMaxDmg" type="text" disabled="true" /></td>
-					</tr>
-					<tr>
-						<td>SD</td><td><input id="oSD" type="text" disabled="true"></td>
-					</tr>
-					<tr>
-						<td>HP</td><td><input id="oHP" type="text" disabled="true"></td>
-					</tr>
-					<tr>
-						<td>MP</td><td><input id="oMP" type="text" disabled="true"></td>
-					</tr>
-					<tr>
-						<td>AG</td><td><input id="oAG" type="text" disabled="true"></td>
-					</tr>
-					<tr>
-						<td>Velocidade de Ataque</td><td><input id="oSpeed" type="text" disabled="true"></td>
-					</tr>
-					<tr>
-						<td>Defesa</td><td><input id="oDef" type="text" disabled="true"></td>
-					</tr>
-					<tr>
-						<td>Taxa de Defesa(PvM)</td><td><input id="oPvmDr" type="text" disabled="true"></td>
-					</tr>
-					<tr>
-						<td>Taxa de Ataque(PvM)</td><td><input id="oPvmAr" type="text" disabled="true"></td>
-					</tr>
-					<tr>
-						<td>Taxa de Defesa(PvP)</td><td><input id="oPvpDr" type="text" disabled="true"></td>
-					</tr>
-					<tr>
-						<td>Taxa de Ataque(PvP)</td><td><input id="oPvpAr" type="text" disabled="true"></td>
-					</tr>
+						<td>
+							<select id="iSTAsa">
+								<option value="0">N/A</option>
+								<option value="1">Lvl 1</option>
+								<option value="2">Lvl 2</option>
+							</select>
+						</td>
+					</td>
+				</tr>
+				<tr>
+				<td>Nível da asa</td><td><input value="0" id="iSLAsa" min="0" max = "13" type="number"></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<label><input id="iSCImp" type="checkbox"/>Imp (30%)</label>
+						<label><input id="iSCStaff" type="checkbox"/>Staff (2%)</label>
+						<label><input id="iSCPendant" type="checkbox"/>Pendant (2%)</label>
+					</td>
 				</tr>
 			</table>
-		</fieldset>			
-	</section>
+		</fieldset>
+		<fieldset>
+			<legend>Output</legend>
+			<table>
+				<tr>
+					<td>Pontos Disponíveis</td>
+					<td><input id="oPontos" type="text" disabled="true"></td>
+				</tr>
+				<tr>
+					<td>Dano Mínimo</td><td>Dano Máximo</td><td>Dano Excelente</td>
+				</tr>
+				<tr>
+					<td><input id="oMinDmg" type="text" disabled="true" /></td>
+					<td><input id="oMaxDmg" type="text" disabled="true" /></td>
+					<td><input id="oExcDmg" type="text" disabled="true" /></td>
+				</tr>
+				<tr>
+					<td>SD</td><td><input id="oSD" type="text" disabled="true"></td>
+				</tr>
+				<tr>
+					<td>HP</td><td><input id="oHP" type="text" disabled="true"></td>
+				</tr>
+				<tr>
+					<td>MP</td><td><input id="oMP" type="text" disabled="true"></td>
+				</tr>
+				<tr>
+					<td>AG</td><td><input id="oAG" type="text" disabled="true"></td>
+				</tr>
+				<tr>
+					<td>Velocidade de Ataque</td><td><input id="oSpeed" type="text" disabled="true"></td>
+				</tr>
+				<tr>
+					<td>Defesa</td><td><input id="oDef" type="text" disabled="true"></td>
+				</tr>
+				<tr>
+					<td>Taxa de Defesa(PvM)</td><td><input id="oPvmDr" type="text" disabled="true"></td>
+				</tr>
+				<tr>
+					<td>Taxa de Ataque(PvM)</td><td><input id="oPvmAr" type="text" disabled="true"></td>
+				</tr>
+				<tr>
+					<td>Taxa de Defesa(PvP)</td><td><input id="oPvpDr" type="text" disabled="true"></td>
+				</tr>
+				<tr>
+					<td>Taxa de Ataque(PvP)</td><td><input id="oPvpAr" type="text" disabled="true"></td>
+				</tr>
+			</tr>
+		</table>
+	</fieldset>			
+</section>
 </article>
 </body>
 </html>
