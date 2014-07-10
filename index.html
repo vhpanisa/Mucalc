@@ -25,28 +25,31 @@
 				<table>
 					<tr>
 						<td>Resets</td>
-						<td><input id="iResets" value="0" type="text"></td>
+						<td><input id="iResets" value="0" min="0" max="500" type="number"></td>
 					</tr>
 					<tr>
-						<td>Level</td><td><input value="1" id="iLevel" type="text"></td>
+						<td>Level</td><td><input value="1" id="iLevel" min="1" max="400" type="number"></td>
 					</tr>
 					<tr>
-						<td>Força</td><td><input value="25" id="iStr" type="text"></td>
+						<td>Força</td><td><input value="25" id="iStr" min="0" max="32500" type="number"></td>
 					</tr>
 					<tr>
-						<td>Agilidade</td><td><input value="25" id="iAgi" type="text"></td>
+						<td>Agilidade</td><td><input value="25" id="iAgi" min="0" max="32500" type="number"></td>
 					</tr>
 					<tr>
-						<td>Vitalidade</td><td><input value="25" id="iVit" type="text"></td>
+						<td>Vitalidade</td><td><input value="25" id="iVit" min="0" max="32500" type="number"></td>
 					</tr>
 					<tr>
-						<td>Energia</td><td><input value="25" id="iEne" type="text"></td>
+						<td>Energia</td><td><input value="25" min="0" max="32500" id="iEne" type="number"></td>
 					</tr>
 					<tr>
-						<td>Peças com Vida</td><td><input value="0" id="iSVida" type="text"></td>
+						<td>Partes com Vida</td><td><input value="0" id="iSVida" min="0" max ="8" type="number"></td>
 					</tr>
 					<tr>
-						<td>Dano Extra Staff (%)</td><td><input value="0" id="iSStaff" type="text"></td>
+						<td>Partes com Diminui</td><td><input value="0" id="iSDiminui" min="0" max ="8" type="number"></td>
+					</tr>
+					<tr>
+						<td>Dano Extra Staff (%)</td><td><input value="0" min="0" id="iSStaff" type="number"></td>
 					</tr>
 					<tr>
 						<td>
@@ -62,13 +65,21 @@
 					</td>
 				</tr>
 				<tr>
-				<td>Nível da asa</td><td><input value="0" id="iSLAsa" min="0" max = "13" type="number"></td>
+					<td>Nível da asa</td><td><input value="0" id="iSLAsa" min="0" max = "13" type="number"></td>
 				</tr>
 				<tr>
 					<td colspan="2">
 						<label><input id="iSCImp" type="checkbox"/>Imp (30%)</label>
 						<label><input id="iSCStaff" type="checkbox"/>Staff (2%)</label>
 						<label><input id="iSCPendant" type="checkbox"/>Pendant (2%)</label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Dano Recebido Planejado
+					</td>
+					<td>
+						<input type="number" min="0" id="iSampledmg"/>
 					</td>
 				</tr>
 			</table>
@@ -103,8 +114,13 @@
 				<tr>
 					<td>Velocidade de Ataque</td><td><input id="oSpeed" type="text" disabled="true"></td>
 				</tr>
+
 				<tr>
-					<td>Defesa</td><td><input id="oDef" type="text" disabled="true"></td>
+					<td>Defesa</td><td>Dano Recebido Efetivo</td>
+				</tr>
+				<tr>
+					<td><input id="oDef" type="text" disabled="true"></td>
+					<td><input id="oDefp" type="number" disabled="true"></td>
 				</tr>
 				<tr>
 					<td>Taxa de Defesa(PvM)</td><td><input id="oPvmDr" type="text" disabled="true"></td>

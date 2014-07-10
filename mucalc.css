@@ -13,7 +13,7 @@ article.tabs section
 	display: block;
 	top: 1.8em;
 	left: 0;
-	height: 12em;
+	height: 26em;
 	padding: 10px 20px;
 	background-color: #ddd;
 	border-radius: 5px;
@@ -67,7 +67,7 @@ article.tabs section:target,
 article.tabs section:target h2
 {
 	color: #333;
-	background-color: #fff;
+	background-color: #6DAAC2;
 	z-index: 2;
 }
 

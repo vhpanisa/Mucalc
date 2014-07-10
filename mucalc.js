@@ -70,9 +70,11 @@ function refresh(){
 	var lvl = +$('iLevel').value;
 	var reset = +$('iResets').value;
 	var pvida = +$('iSVida').value;
+	var sample = +$('iSampledmg').value;
+	var pdimi = +$('iSDiminui').value;
 	var staff = (+$('iSStaff').value) / 100;
 	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
-	var lasa = $('iSLAsa').value;
+	var lasa = +$('iSLAsa').value;
 	var imp = +$('iSCImp').checked;
 	var addstaff = +$('iSCStaff').checked;
 	var addpendant = +$('iSCPendant').checked;			
@@ -82,8 +84,41 @@ function refresh(){
 		exreset = reset - 250;
 		reset = 250;
 	}
-
 	var pontos = 100 + (280 * reset) + (exreset * 12) + (6 * (lvl-1)) - (str+agi+vit+ene);
+
+	var iatasa = 0;
+	var Tiatasa = 0;
+	var idfasa = 0;
+	var Tidfasa = 0;
+	var absasa = 0;
+	var Tabsasa = 0;
+
+	switch(tasa){
+
+		case 1:
+		Tiatasa = 2;
+		Tidfasa = 3;
+		Tabsasa = 2;
+		iatasa = 12;
+		idfasa = 10;
+		absasa = 12;
+		speed += 15;
+		break;
+
+		case 2:
+		Tiatasa = 1;
+		Tidfasa = 2;
+		Tabsasa = 1;
+		iatasa = 32;
+		idfasa = 45;
+		absasa = 25;
+		speed += 16;
+		break;
+	}
+
+	iatasa += (Tiatasa * lasa); iatasa /= 100;
+	def += (Tidfasa * lasa);
+	absasa += (Tabsasa * lasa); absasa /= 100;
 	var hp = 30+(lvl-1)+(vit*2);
 
 	for (var i = 0; i < pvida; i++) {
@@ -92,25 +127,23 @@ function refresh(){
 
 	var mp = (lvl-1)*2+ene*2;
 	var ag = ((ene*0.2)+(vit*0.3)+(agi*0.4)+(str*0.2)) | 0 ;
-	var def = (agi/4) | 0;
+	var def = (agi/4); def 
+
+	sample -= def;
+	sample = sample * (1-absasa) ; sample |= 0;
+
+	for (var i = 0; i < pdimi; i++) {
+		sample = (sample*0.96) | 0;
+	}
+	
+	if(sample < 0) sample = 0;
+
 	var speed = (agi/10) | 0;
 	var sd = ((str+agi+vit+ene) * 1.2 + def / 2 + lvl*lvl/ 30) | 0;
-
-	var asa = 0;
-	switch(tasa){
-		case 1:
-		tasa = 2;
-		asa = 12;
-		break;
-		case 2:
-		tasa = 1;
-		asa = 32;
-		break;
-	}
-	asa += (tasa * lasa); asa /= 100; ;
+	
 	var chkdmg = (1+(imp*0.3)) * (1+(addpendant*0.02)) * (1+(addstaff*0.02));
-	var mindmg = (ene / 9) * (1+staff) * (1+asa); mindmg *= chkdmg; mindmg |= 0;
-	var maxdmg = (ene / 4) * (1+staff) * (1+asa); maxdmg *= chkdmg; maxdmg |= 0;
+	var mindmg = (ene / 9) * (1+staff) * (1+iatasa); mindmg *= chkdmg; mindmg |= 0;
+	var maxdmg = (ene / 4) * (1+staff) * (1+iatasa); maxdmg *= chkdmg; maxdmg |= 0;
 	var excdmg = maxdmg * 1.20; excdmg |= 0;
 	var pvmdr = (agi/3) | 0;
 	var pvmar = (lvl*5+(agi*3)/2+str/4) | 0;
@@ -126,6 +159,7 @@ function refresh(){
 	$('oAG').value = ag;
 	$('oSD').value = sd;
 	$('oDef').value = def;
+	$('oDefp').value = sample;
 	$('oSpeed').value = speed;
 	$('oPvmDr').value = pvmdr;
 	$('oPvmAr').value = pvmar;
