@@ -49,7 +49,19 @@ function addTab(){
 	var tabs = $("tabs");
 	var newTab = document.createElement("section");
 	newTab.id = newTabID;
-	newTab.innerHTML = $('modelSM').innerHTML;
+	var aux = "";
+	switch(+$('classes').options[$('classes').selectedIndex].value){
+		case 2:
+		aux = $('modelSM').innerHTML;
+		break;
+		case 3:
+		aux = $('modelME').innerHTML;
+		break;
+		default:
+		alert('Classe não implementada');
+		return;
+	}
+	newTab.innerHTML = aux;
 	tabs.appendChild(newTab);
 	$(newTabID).getElementsByTagName('a')[0].href = '#'+ newTabID; 
 
@@ -69,7 +81,7 @@ function addTab(){
 	}
 }
 
-function refresh(e){
+function refreshSM(e){
 	var sender = (e && e.target) || (window.event && window.event.srcElement);
 	var prefix = (sender.id).substring(0,5);
 	var $ = function( id ) { return document.getElementById( prefix + id ); };
@@ -160,6 +172,114 @@ function refresh(e){
 	var pvmar = (lvl*5+(agi*3)/2+str/4) | 0;
 	var pvpdr = (lvl*2+agi*0.25) | 0;
 	var pvpar = (lvl*3+agi*4) | 0;
+
+	$('oPontos').value = pontos;
+	$('oMinDmg').value = mindmg;
+	$('oMaxDmg').value = maxdmg;
+	$('oExcDmg').value = excdmg;
+	$('oHP').value = hp;
+	$('oMP').value = mp;
+	$('oAG').value = ag;
+	$('oSD').value = sd;
+	$('oDef').value = def;
+	$('oDefp').value = sample;
+	$('oSpeed').value = speed;
+	$('oPvmDr').value = pvmdr;
+	$('oPvmAr').value = pvmar;
+	$('oPvpDr').value = pvpdr;
+	$('oPvpAr').value = pvpar;
+}
+
+function refreshME(e){
+	var sender = (e && e.target) || (window.event && window.event.srcElement);
+	var prefix = (sender.id).substring(0,5);
+	var $ = function( id ) { return document.getElementById( prefix + id ); };
+	if (!sanitycheck(prefix)) return;
+	var str = +$('iStr').value;
+	var agi = +$('iAgi').value;
+	var vit = +$('iVit').value;
+	var ene = +$('iEne').value;
+	var lvl = +$('iLevel').value;
+	var reset = +$('iResets').value;
+	var pvida = +$('iSVida').value;
+	var sample = +$('iSampledmg').value;
+	var pdimi = +$('iSDiminui').value;
+	//var staff = (+$('iSStaff').value) / 100;
+	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
+	var lasa = +$('iSLAsa').value;
+	var imp = +$('iSCImp').checked;
+	var addbow = +$('iSCBow').checked;
+	var addpendant = +$('iSCPendant').checked;			
+
+	var exreset = 0;
+	if (reset > 250){
+		exreset = reset - 250;
+		reset = 250;
+	}
+	var pontos = 100 + (280 * reset) + (exreset * 12) + (6 * (lvl-1)) - (str+agi+vit+ene);
+
+	var iatasa = 0;
+	var Tiatasa = 0;
+	var idfasa = 0;
+	var Tidfasa = 0;
+	var absasa = 0;
+	var Tabsasa = 0;
+
+	switch(tasa){
+
+		case 1:
+		Tiatasa = 2;
+		Tidfasa = 3;
+		Tabsasa = 2;
+		iatasa = 12;
+		idfasa = 10;
+		absasa = 12;
+		speed += 15;
+		break;
+
+		case 2:
+		Tiatasa = 1;
+		Tidfasa = 2;
+		Tabsasa = 1;
+		iatasa = 32;
+		idfasa = 45;
+		absasa = 25;
+		speed += 16;
+		break;
+	}
+
+	iatasa += (Tiatasa * lasa); iatasa /= 100;
+	def += (Tidfasa * lasa);
+	absasa += (Tabsasa * lasa); absasa /= 100;
+	var hp = 40+(lvl-1)+(vit*2);
+
+	for (var i = 0; i < pvida; i++) {
+		hp = (hp*1.05) | 0;
+	}
+
+	var mp = 6+(lvl*1.5)+(ene*1.5);
+	var ag = ((ene*0.2)+(vit*0.3)+(agi*0.2)+(str*0.3)) | 0 ;
+	var def = (agi/10); def |= 0;
+
+	sample -= def;
+	sample = sample * (1-absasa) ; sample |= 0;
+
+	for (var i = 0; i < pdimi; i++) {
+		sample = (sample*0.96) | 0;
+	}
+	
+	if(sample < 0) sample = 0;
+
+	var speed = (agi/50) | 0;
+	var sd = ((str+agi+vit+ene) * 1.2 + def / 2 + lvl*lvl/ 30) | 0;
+	var chkdmg = (1+(imp*0.3)) * (1+(addpendant*0.02)) * (1+(addbow*0.02));
+	var mindmg = (str/14) + (agi/7) * (1+iatasa); mindmg *= chkdmg; mindmg |= 0;
+	var maxdmg = (str/8) + (agi/4) * (1+iatasa); maxdmg *= chkdmg; maxdmg |= 0;
+	var excdmg = maxdmg * 1.10; excdmg |= 0;
+	var pvmdr = (agi/4) | 0;
+	var pvmar = (lvl*5+(agi*3)/2+str/4) | 0;
+	var pvpdr = (lvl*2+agi*0.1) | 0;
+	var pvpar = (lvl*3+agi*0.6) | 0;
 
 	$('oPontos').value = pontos;
 	$('oMinDmg').value = mindmg;
