@@ -133,3 +133,5 @@ obs: valores testados de 100 em 100
 obs2: testados com uma staff com 30 de velocidade
 
 bug d energia, sem peças de mana = 32.368
+Best max energia 32.364
+best max energia ancient 32.328

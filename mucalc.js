@@ -1,8 +1,8 @@
 var $ = function( id ) { return document.getElementById( id ); };
 
-function sanitycheck(){
+function sanitycheck(prefix){
+	var $ = function( id ) { return document.getElementById( prefix + id ); };
 	var flag = true;
-	//alert($('iStr').value);
 
 	$('iStr').style['background-color'] = '';
 	if (+$('iStr').value > 32500 || +$('iStr').value < 0){
@@ -44,25 +44,36 @@ function sanitycheck(){
 }
 
 function addTab(){
-	var newTabID = $('tabs').getElementsByTagName('section').length;
+	var newTabID = $('tabs').getElementsByTagName('section').length - 1;
 	newTabID = 'tab' + (newTabID+1);
 	var tabs = $("tabs");
 	var newTab = document.createElement("section");
 	newTab.id = newTabID;
-	newTab.innerHTML =
-	[
-	'<h2><a href="',
-	'#' + newTabID,
-	'">',
-	'Tab 1',
-	'</a></h2>',
-	'<p>This content appears on tab 2.</p>',
-	].join('\n');
+	newTab.innerHTML = $('modelSM').innerHTML;
 	tabs.appendChild(newTab);
+	$(newTabID).getElementsByTagName('a')[0].href = '#'+ newTabID; 
+
+	var matches = [];
+	var elements = $(newTabID).getElementsByTagName('input');
+	for(var i = 0; i < elements.length; i++) {
+		if(elements[i].id != 'undefined') {
+			elements[i].id = newTabID + '_' + elements[i].id;
+		}
+	}
+
+	var elements = $(newTabID).getElementsByTagName('select');
+	for(var i = 0; i < elements.length; i++) {
+		if(elements[i].id != 'undefined') {
+			elements[i].id = newTabID + '_' + elements[i].id;
+		}
+	}
 }
 
-function refresh(){
-	if (!sanitycheck()) return;
+function refresh(e){
+	var sender = (e && e.target) || (window.event && window.event.srcElement);
+	var prefix = (sender.id).substring(0,5);
+	var $ = function( id ) { return document.getElementById( prefix + id ); };
+	if (!sanitycheck(prefix)) return;
 	var str = +$('iStr').value;
 	var agi = +$('iAgi').value;
 	var vit = +$('iVit').value;
@@ -127,7 +138,7 @@ function refresh(){
 
 	var mp = (lvl-1)*2+ene*2;
 	var ag = ((ene*0.2)+(vit*0.3)+(agi*0.4)+(str*0.2)) | 0 ;
-	var def = (agi/4); def 
+	var def = (agi/4); def |= 0;
 
 	sample -= def;
 	sample = sample * (1-absasa) ; sample |= 0;
@@ -144,7 +155,7 @@ function refresh(){
 	var chkdmg = (1+(imp*0.3)) * (1+(addpendant*0.02)) * (1+(addstaff*0.02));
 	var mindmg = (ene / 9) * (1+staff) * (1+iatasa); mindmg *= chkdmg; mindmg |= 0;
 	var maxdmg = (ene / 4) * (1+staff) * (1+iatasa); maxdmg *= chkdmg; maxdmg |= 0;
-	var excdmg = maxdmg * 1.20; excdmg |= 0;
+	var excdmg = maxdmg * 1.10; excdmg |= 0;
 	var pvmdr = (agi/3) | 0;
 	var pvmar = (lvl*5+(agi*3)/2+str/4) | 0;
 	var pvpdr = (lvl*2+agi*0.25) | 0;
@@ -165,5 +176,4 @@ function refresh(){
 	$('oPvmAr').value = pvmar;
 	$('oPvpDr').value = pvpdr;
 	$('oPvpAr').value = pvpar;
-
 }
