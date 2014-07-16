@@ -91,6 +91,7 @@ function addTab(){
 			elements[i].id = newTabID + '_' + elements[i].id;
 		}
 	}
+	window.location.href = '#'+ newTabID;
 }
 
 function refreshSM(e){
