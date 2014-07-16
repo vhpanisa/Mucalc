@@ -67,8 +67,19 @@ article.tabs section:target,
 article.tabs section:target h2
 {
 	color: #333;
-	background-color: #6DAAC2;
 	z-index: 2;
+}
+
+article.tabs .sm:target,
+article.tabs .sm:target h2
+{
+	background-color: #6DAAC2;
+}
+
+article.tabs .me:target,
+article.tabs .me:target h2
+{
+	background-color: #8DDE50;
 }
 
 article.tabs section,

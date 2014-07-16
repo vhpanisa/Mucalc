@@ -63,6 +63,18 @@ function addTab(){
 	}
 	newTab.innerHTML = aux;
 	tabs.appendChild(newTab);
+	switch(+$('classes').options[$('classes').selectedIndex].value){
+		case 2:
+		$(newTabID).classList.add('sm');
+		break;
+		case 3:
+		$(newTabID).classList.add('me');
+		break;
+		default:
+		alert('Classe não implementada');
+		return;
+	}
+	
 	$(newTabID).getElementsByTagName('a')[0].href = '#'+ newTabID; 
 
 	var matches = [];
