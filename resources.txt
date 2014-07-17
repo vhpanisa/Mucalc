@@ -106,8 +106,8 @@ ME
 MG
 ==
 
-[ ] Min dmg = str/6+ene/12
-[ ] Max dmg = str/4+ene/8
+[X] Min dmg = str/6+ene/12
+[X] Max dmg = str/4+ene/8
 [X] Min wiz dmg = ene/9
 [X] Max wiz dmg = ene/4
 [X] Speed = agi/15

@@ -394,6 +394,12 @@ function refreshMG(e){
 	var pdimi = +$('iSDiminui').value;
 	var pddi = +$('iSDDI').value;
 	var ppvm = +$('iSPvm').value;
+	var wpmin = 0;
+	var wpmax = 0;
+	if (+$('iSWpmin').value > 0)
+		wpmin = +$('iSWpmin').value;
+	if (+$('iSWpmax').value > 0)
+		wpmax = +$('iSWpmax').value;
 	var staff = (+$('iSStaff').value) / 100;
 	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
 	var lasa = +$('iSLAsa').value;
@@ -473,6 +479,21 @@ function refreshMG(e){
 	var speed = (agi/15) | 0;
 	var sd = ((str+agi+vit+ene) * 1.2 + def / 2 + lvl*lvl/ 30) | 0;
 	
+	var minphydmg = ((str/6)+(ene/12)+wpmin) * (1+(addpendant*0.02)) * (1+(addstaff*0.02));
+	minphydmg += dmgbuff;
+	minphydmg *= (1+iatasa) * (1+(imp*0.3));
+	minphydmg *= 2;
+	minphydmg |= 0;
+
+	var maxphydmg = ((str/4)+(ene/8)+wpmax) * (1+(addpendant*0.02)) * (1+(addstaff*0.02));
+	maxphydmg += dmgbuff;
+	maxphydmg *= (1+iatasa) * (1+(imp*0.3));
+	maxphydmg *= 2;
+	maxphydmg |= 0;
+
+	var excphydmg = maxphydmg * 1.20; excphydmg |= 0;
+
+
 	var minwizdmg = (ene / 9) * (1+(addpendant*0.02)) * (1+(addstaff*0.02)) * (1+staff);
 	minwizdmg += dmgbuff;
 	minwizdmg *= (1+iatasa) * (1+(imp*0.3));
@@ -484,6 +505,7 @@ function refreshMG(e){
 	maxwizdmg |= 0;
 
 	var excwizdmg = maxwizdmg * 1.20; excwizdmg |= 0;
+
 	var pvmdr = (agi/3) | 0;
 	var pvmar = (lvl*5+(agi*3)/2+str/4) | 0;
 	var pvpdr = (lvl*2+agi*0.25) | 0;
@@ -494,9 +516,12 @@ function refreshMG(e){
 	}
 
 	$('oPontos').value = pontos;
-	$('oMinDmg').value = minwizdmg;
-	$('oMaxDmg').value = maxwizdmg;
-	$('oExcDmg').value = excwizdmg;
+	$('oMinwizDmg').value = minwizdmg;
+	$('oMaxwizDmg').value = maxwizdmg;
+	$('oExcwizDmg').value = excwizdmg;
+	$('oMinphyDmg').value = minphydmg;
+	$('oMaxphyDmg').value = maxphydmg;
+	$('oExcphyDmg').value = excphydmg;
 	$('oHP').value = hp;
 	$('oMP').value = mp;
 	$('oAG').value = ag;

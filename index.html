@@ -7,7 +7,6 @@
 	<script src="mucalc.js" type="text/javascript"></script>
 </head>
 <body>
-
 	<!-- COMEÇO DOS MODELOS -->
 	<article style="display:none">
 		<section id="modelMG">
@@ -46,6 +45,15 @@
 						</tr>
 						<tr>
 							<td>Partes com PvM</td><td><input value="0" id="iSPvm" min="0" max ="7" type="number"></td>
+						</tr>
+						<tr>
+							<td>Dano Espada</td>
+							<td>
+								Min <input value="0" min="0" id="iSWpmin" type="number">
+							</td>
+							<td>
+								Max <input value="0" min="0" id="iSWpmax" type="number">
+							</td>
 						</tr>
 						<tr>
 							<td>Dano Extra Staff (%)</td><td><input value="0" min="0" id="iSStaff" type="number"></td>
@@ -99,12 +107,20 @@
 						<td><input id="oPontos" type="text" disabled="true"></td>
 					</tr>
 					<tr>
-						<td>Dano Mínimo</td><td>Dano Máximo</td><td>Dano Excelente</td>
+						<td>Mín Magico</td><td>Máx Magico</td><td>Exc Magico</td>
 					</tr>
 					<tr>
-						<td><input id="oMinDmg" type="text" disabled="true" /></td>
-						<td><input id="oMaxDmg" type="text" disabled="true" /></td>
-						<td><input id="oExcDmg" type="text" disabled="true" /></td>
+						<td><input id="oMinwizDmg" type="text" disabled="true" /></td>
+						<td><input id="oMaxwizDmg" type="text" disabled="true" /></td>
+						<td><input id="oExcwizDmg" type="text" disabled="true" /></td>
+					</tr>
+					<tr>
+						<td>Mín Fisico</td><td>Máx Fisico</td><td>Exc Fisico</td>
+					</tr>
+					<tr>
+						<td><input id="oMinphyDmg" type="text" disabled="true" /></td>
+						<td><input id="oMaxphyDmg" type="text" disabled="true" /></td>
+						<td><input id="oExcphyDmg" type="text" disabled="true" /></td>
 					</tr>
 					<tr>
 						<td>SD</td><td><input id="oSD" type="text" disabled="true"></td>
