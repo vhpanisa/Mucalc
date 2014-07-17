@@ -113,6 +113,7 @@ function refreshSM(e){
 	var reset = +$('iResets').value;
 	var pvida = +$('iSVida').value;
 	var pdimi = +$('iSDiminui').value;
+	var pddi = +$('iSDDI').value;
 	var ppvm = +$('iSPvm').value;
 	var staff = (+$('iSStaff').value) / 100;
 	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
@@ -185,6 +186,9 @@ function refreshSM(e){
 	for (var i = 0; i < pdimi; i++) {
 		sample = (sample*0.96) | 0;
 	}
+	for (var i = 0; i < pddi; i++) {
+		sample = (sample*0.93) | 0;
+	}
 	if(sample < 0) sample = 0;
 
 	var speed = (agi/10) | 0;
@@ -247,6 +251,7 @@ function refreshME(e){
 	var reset = +$('iResets').value;
 	var pvida = +$('iSVida').value;
 	var pdimi = +$('iSDiminui').value;
+	var pddi = +$('iSDDI').value;
 	var ppvm = +$('iSPvm').value;
 	var bowmin = 0;
 	var bowmax = 0;
@@ -326,7 +331,9 @@ function refreshME(e){
 	for (var i = 0; i < pdimi; i++) {
 		sample = (sample*0.96) | 0;
 	}
-	
+	for (var i = 0; i < pddi; i++) {
+		sample = (sample*0.93) | 0;
+	}
 	if(sample < 0) sample = 0;
 
 	var speed = (agi/50) | 0;
@@ -385,6 +392,7 @@ function refreshMG(e){
 	var reset = +$('iResets').value;
 	var pvida = +$('iSVida').value;
 	var pdimi = +$('iSDiminui').value;
+	var pddi = +$('iSDDI').value;
 	var ppvm = +$('iSPvm').value;
 	var staff = (+$('iSStaff').value) / 100;
 	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
@@ -456,6 +464,9 @@ function refreshMG(e){
 
 	for (var i = 0; i < pdimi; i++) {
 		sample = (sample*0.96) | 0;
+	}
+	for (var i = 0; i < pddi; i++) {
+		sample = (sample*0.93) | 0;
 	}
 	if(sample < 0) sample = 0;
 
