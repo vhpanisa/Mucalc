@@ -66,20 +66,26 @@ article.tabs section h2 a
 article.tabs section:target,
 article.tabs section:target h2
 {
-	color: #333;
+	color: #EEE;
 	z-index: 2;
+}
+
+article.tabs .mg:target,
+article.tabs .mg:target h2
+{	
+	background-color: #80067D;
 }
 
 article.tabs .sm:target,
 article.tabs .sm:target h2
 {
-	background-color: #6DAAC2;
+	background-color: #3A778F;
 }
 
 article.tabs .me:target,
 article.tabs .me:target h2
 {
-	background-color: #8DDE50;
+	background-color: #5AAB1D;
 }
 
 article.tabs section,
