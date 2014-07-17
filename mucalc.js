@@ -113,7 +113,13 @@ function refreshSM(e){
 	var lasa = +$('iSLAsa').value;
 	var imp = +$('iSCImp').checked;
 	var addstaff = +$('iSCStaff').checked;
-	var addpendant = +$('iSCPendant').checked;			
+	var addpendant = +$('iSCPendant').checked;
+	var dmgbuff = 0;
+	var defbuff = 0;
+	if(+$('iBuffME').value > 0){
+		dmgbuff = ((+$('iBuffME').value / 7) + 3) | 0;
+		defbuff = ((+$('iBuffME').value / 8) + 2) | 0;
+	}
 
 	var exreset = 0;
 	if (reset > 250){
@@ -153,7 +159,6 @@ function refreshSM(e){
 	}
 
 	iatasa += (Tiatasa * lasa); iatasa /= 100;
-	def += (Tidfasa * lasa);
 	absasa += (Tabsasa * lasa); absasa /= 100;
 	var hp = 30+(lvl-1)+(vit*2);
 
@@ -164,6 +169,8 @@ function refreshSM(e){
 	var mp = (lvl-1)*2+ene*2;
 	var ag = ((ene*0.2)+(vit*0.3)+(agi*0.4)+(str*0.2)) | 0 ;
 	var def = (agi/4); def |= 0;
+	def += defbuff;
+	def += (Tidfasa * lasa);
 
 	sample -= def;
 	sample = sample * (1-absasa) ; sample |= 0;
@@ -177,10 +184,17 @@ function refreshSM(e){
 	var speed = (agi/10) | 0;
 	var sd = ((str+agi+vit+ene) * 1.2 + def / 2 + lvl*lvl/ 30) | 0;
 	
-	var chkdmg = (1+(imp*0.3)) * (1+(addpendant*0.02)) * (1+(addstaff*0.02));
-	var mindmg = (ene / 9) * (1+staff) * (1+iatasa); mindmg *= chkdmg; mindmg |= 0;
-	var maxdmg = (ene / 4) * (1+staff) * (1+iatasa); maxdmg *= chkdmg; maxdmg |= 0;
-	var excdmg = maxdmg * 1.10; excdmg |= 0;
+	var mindmg = (ene / 9) * (1+(addpendant*0.02)) * (1+(addstaff*0.02)) * (1+staff);
+	mindmg += dmgbuff;
+	mindmg *= (1+iatasa) * (1+(imp*0.3));
+	mindmg |= 0;
+
+	var maxdmg = (ene / 4) * (1+(addpendant*0.02)) * (1+(addstaff*0.02)) * (1+staff);
+	maxdmg += dmgbuff;
+	maxdmg *= (1+iatasa) * (1+(imp*0.3));
+	maxdmg |= 0;
+
+	var excdmg = maxdmg * 1.20; excdmg |= 0;
 	var pvmdr = (agi/3) | 0;
 	var pvmar = (lvl*5+(agi*3)/2+str/4) | 0;
 	var pvpdr = (lvl*2+agi*0.25) | 0;
@@ -208,6 +222,13 @@ function refreshME(e){
 	var prefix = (sender.id).substring(0,5);
 	var $ = function( id ) { return document.getElementById( prefix + id ); };
 	if (!sanitycheck(prefix)) return;
+	if (+$('iSCSelf').checked == 1){
+		$('iBuffME').value = $('iEne').value;
+		$('iBuffME').disabled = true;
+	}else{
+		$('iBuffME').value = 0;
+		$('iBuffME').disabled = false;
+	}
 	var str = +$('iStr').value;
 	var agi = +$('iAgi').value;
 	var vit = +$('iVit').value;
@@ -217,12 +238,27 @@ function refreshME(e){
 	var pvida = +$('iSVida').value;
 	var sample = +$('iSampledmg').value;
 	var pdimi = +$('iSDiminui').value;
-	//var staff = (+$('iSStaff').value) / 100;
+	var bowmin = 0;
+	var bowmax = 0;
+	if(+$('iSBowmin').value > 0)
+		bowmin = +$('iSBowmin').value;
+	if(+$('iSBowmax').value > 0)
+		bowmax = +$('iSBowmax').value;
 	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
 	var lasa = +$('iSLAsa').value;
 	var imp = +$('iSCImp').checked;
 	var addbow = +$('iSCBow').checked;
-	var addpendant = +$('iSCPendant').checked;			
+	var addpendant = +$('iSCPendant').checked;	
+	var dmgbuff = 0;
+	var defbuff = 0;
+	if(+$('iBuffME').value > 0){
+		dmgbuff = ((+$('iBuffME').value / 7) + 3) | 0;
+		defbuff = ((+$('iBuffME').value / 8) + 2) | 0;
+		
+	}		
+	var red = ((ene/7)+3) | 0;
+	var	green = ((ene/8)+2) | 0;
+	var	blue = ((ene/5)+5) | 0;
 
 	var exreset = 0;
 	if (reset > 250){
@@ -262,7 +298,6 @@ function refreshME(e){
 	}
 
 	iatasa += (Tiatasa * lasa); iatasa /= 100;
-	def += (Tidfasa * lasa);
 	absasa += (Tabsasa * lasa); absasa /= 100;
 	var hp = 40+(lvl-1)+(vit*2);
 
@@ -273,7 +308,7 @@ function refreshME(e){
 	var mp = 6+(lvl*1.5)+(ene*1.5);
 	var ag = ((ene*0.2)+(vit*0.3)+(agi*0.2)+(str*0.3)) | 0 ;
 	var def = (agi/10); def |= 0;
-
+	def += (Tidfasa * lasa);
 	sample -= def;
 	sample = sample * (1-absasa) ; sample |= 0;
 
@@ -285,10 +320,18 @@ function refreshME(e){
 
 	var speed = (agi/50) | 0;
 	var sd = ((str+agi+vit+ene) * 1.2 + def / 2 + lvl*lvl/ 30) | 0;
-	var chkdmg = (1+(imp*0.3)) * (1+(addpendant*0.02)) * (1+(addbow*0.02));
-	var mindmg = (str/14) + (agi/7) * (1+iatasa); mindmg *= chkdmg; mindmg |= 0;
-	var maxdmg = (str/8) + (agi/4) * (1+iatasa); maxdmg *= chkdmg; maxdmg |= 0;
-	var excdmg = maxdmg * 1.10; excdmg |= 0;
+
+	var mindmg = ((str/14) + (agi/7) + bowmin) * (1+(addpendant*0.02)) * (1+(addbow*0.02));
+	mindmg += dmgbuff;
+	mindmg *= (1+iatasa) * (1+(imp*0.3));
+	mindmg |= 0;
+
+	var maxdmg = ((str/8) + (agi/4) + bowmax) * (1+(addpendant*0.02)) * (1+(addbow*0.02));
+	maxdmg += dmgbuff;
+	maxdmg *= (1+iatasa) * (1+(imp*0.3));
+	maxdmg |= 0;
+
+	var excdmg = maxdmg * 1.20; excdmg |= 0;
 	var pvmdr = (agi/4) | 0;
 	var pvmar = (lvl*5+(agi*3)/2+str/4) | 0;
 	var pvpdr = (lvl*2+agi*0.1) | 0;
@@ -309,4 +352,7 @@ function refreshME(e){
 	$('oPvmAr').value = pvmar;
 	$('oPvpDr').value = pvpdr;
 	$('oPvpAr').value = pvpar;
+	$('oBuffRed').value = red;
+	$('oBuffGreen').value = green;
+	$('oBuffBlue').value = blue;
 }
