@@ -52,6 +52,31 @@ article.tabs section:nth-child(3) h2
 	left: 254px;
 }
 
+article.tabs section:nth-child(4) h2
+{
+	left: 376px;
+}
+
+article.tabs section:nth-child(5) h2
+{
+	left: 498px;
+}
+
+article.tabs section:nth-child(6) h2
+{
+	left: 620px;
+}
+/*
+article.tabs section:nth-child(7) h2
+{
+	left: 742px;
+}
+
+article.tabs section:nth-child(8) h2
+{
+	left: 864px;
+}
+*/
 article.tabs section h2 a
 {
 	display: block;

@@ -45,6 +45,7 @@ function sanitycheck(prefix){
 
 function addTab(){
 	var newTabID = $('tabs').getElementsByTagName('section').length - 1;
+	if (newTabID+1 >= 6) return;
 	newTabID = 'tab' + (newTabID+1);
 	var tabs = $("tabs");
 	var newTab = document.createElement("section");
