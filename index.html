@@ -312,6 +312,151 @@
 		</fieldset>	
 	</div>
 </section>
+<section id="modelBK">
+	<div onclick="refreshBK()" onkeyup="refreshBK()">
+	<h2><a href="#">BK</a></h2>
+		<fieldset>
+			<legend>Input</legend>
+			<table>
+				<tr>
+					<td>Resets</td>
+					<td><input id="iResets" value="0" min="0" max="500" type="number"></td>
+				</tr>
+				<tr>
+					<td>Level</td><td><input value="1" id="iLevel" min="1" max="400" type="number"></td>
+				</tr>
+				<tr>
+					<td>Força</td><td><input value="25" id="iStr" min="0" max="32500" type="number"></td>
+				</tr>
+				<tr>
+					<td>Agilidade</td><td><input value="25" id="iAgi" min="0" max="32500" type="number"></td>
+				</tr>
+				<tr>
+					<td>Vitalidade</td><td><input value="25" id="iVit" min="0" max="32500" type="number"></td>
+				</tr>
+				<tr>
+					<td>Energia</td><td><input value="25" min="0" max="32500" id="iEne" type="number"></td>
+				</tr>
+				<tr>
+					<td>Partes com Vida</td><td><input value="0" id="iSVida" min="0" max ="8" type="number"></td>
+				</tr>
+				<tr>
+					<td>Partes com Diminui</td><td><input value="0" id="iSDiminui" min="0" max ="8" type="number"></td>
+				</tr>
+				<tr>
+					<td>Partes Full DDI</td><td><input value="0" id="iSDDI" min="0" max ="6" type="number"></td>
+				</tr>
+				<tr>
+					<td>Partes com PvM</td><td><input value="0" id="iSPvm" min="0" max ="8" type="number"></td>
+				</tr>
+				<tr>
+					<td>Dano Arma</td>
+					<td>
+						Min <input value="0" min="0" id="iSWpmin" type="number">
+					</td>
+					<td>
+						Max <input value="0" min="0" id="iSWpmax" type="number">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Asa
+					</td>
+					<td>
+						<select id="iSTAsa">
+							<option value="0">N/A</option>
+							<option value="1">LVL 1</option>
+							<option value="2">LVL 2</option>
+						</select>
+					</td>
+				</td>
+			</tr>
+			<tr>
+				<td>Nível da Asa</td><td><input value="0" id="iSLAsa" min="0" max="13" type="number"></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<label><input id="iSCImp" type="checkbox"/>Imp (30%)</label>
+					<label><input id="iSCStaff" type="checkbox"/>Arma (2%)</label>
+					<label><input id="iSCPendant" type="checkbox"/>Pendant (2%)</label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Dano Recebido Planejado
+				</td>
+				<td>
+					<input type="number" min="0" id="iSampledmg"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Buff ME (energia)
+				</td>
+				<td>
+					<input type="number" min="0" max="32500" id="iBuffME"/>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+	<fieldset>
+		<legend>Output</legend>
+		<table>
+			<tr>
+				<td>Pontos Disponíveis</td>
+				<td><input id="oPontos" type="text" disabled="true"></td>
+			</tr>
+			<tr>
+				<td>Dano Minimo</td><td>Dano Máximo</td><td>Dano Exc</td>
+			</tr>
+			<tr>
+				<td><input id="oMinphyDmg" type="text" disabled="true" /></td>
+				<td><input id="oMaxphyDmg" type="text" disabled="true" /></td>
+				<td><input id="oExcphyDmg" type="text" disabled="true" /></td>
+			</tr>
+			<tr>
+				<td>Combo</td>
+				<td><input id="oCBDmg" type="text" disabled="true" /></td>
+			</tr>
+			<tr>
+				<td>SD</td><td><input id="oSD" type="text" disabled="true"></td>
+			</tr>
+			<tr>
+				<td>HP</td><td><input id="oHP" type="text" disabled="true"></td>
+			</tr>
+			<tr>
+				<td>MP</td><td><input id="oMP" type="text" disabled="true"></td>
+			</tr>
+			<tr>
+				<td>AG</td><td><input id="oAG" type="text" disabled="true"></td>
+			</tr>
+			<tr>
+				<td>Velocidade de Ataque</td><td><input id="oSpeed" type="text" disabled="true"></td>
+			</tr>
+
+			<tr>
+				<td>Defesa</td><td>Dano Recebido Efetivo</td>
+			</tr>
+			<tr>
+				<td><input id="oDef" type="text" disabled="true"></td>
+				<td><input id="oDefp" type="number" disabled="true"></td>
+			</tr>
+			<tr>
+				<td>Taxa de Defesa(PvM)</td><td><input id="oPvmDr" type="text" disabled="true"></td>
+			</tr>
+			<tr>
+				<td>Taxa de Ataque(PvM)</td><td><input id="oPvmAr" type="text" disabled="true"></td>
+			</tr>
+			<tr>
+				<td>Taxa de Defesa(PvP)</td><td><input id="oPvpDr" type="text" disabled="true"></td>
+			</tr>
+			<tr>
+				<td>Taxa de Ataque(PvP)</td><td><input id="oPvpAr" type="text" disabled="true"></td>
+			</tr>
+		</table>
+	</fieldset>	
+</div>
+</section>
 <section id="modelME">
 	<div onclick="refreshME()" onkeyup="refreshME()">
 		<h2><a href="#">ME</a></h2>

@@ -93,7 +93,7 @@ article.tabs section h2 a
 article.tabs section:target,
 article.tabs section:target h2
 {
-	color: #EEE;
+	color: #FFE;
 	z-index: 2;
 }
 
@@ -101,6 +101,12 @@ article.tabs .mg:target,
 article.tabs .mg:target h2
 {	
 	background-color: #80067D;
+}
+
+article.tabs .bk:target,
+article.tabs .bk:target h2
+{	
+	background-color: #B60000;
 }
 
 article.tabs .sm:target,

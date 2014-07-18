@@ -52,6 +52,9 @@ function addTab(){
 	newTab.id = newTabID;
 	var aux = "";
 	switch(+$('classes').options[$('classes').selectedIndex].value){
+		case 1:
+		aux = $('modelBK').innerHTML;
+		break;
 		case 2:
 		aux = $('modelSM').innerHTML;
 		break;
@@ -71,6 +74,9 @@ function addTab(){
 	newTab.innerHTML = aux;
 	tabs.appendChild(newTab);
 	switch(+$('classes').options[$('classes').selectedIndex].value){
+		case 1:
+		$(newTabID).classList.add('bk');
+		break;
 		case 2:
 		$(newTabID).classList.add('sm');
 		break;
@@ -138,7 +144,7 @@ function calcPontos (c, reset, lvl, str, agi, vit, ene) {
 		pontos = (100 + (280 * reset) + (exreset * 12) + (7 * (lvl-1)) - (str+agi+vit+ene));
 		break;
 		default:
-		pontos = (100 + (340 * reset) + (exreset * 12) + (7 * (lvl-1)) - (str+agi+vit+ene));
+		pontos = (100 + (280 * reset) + (exreset * 12) + (6 * (lvl-1)) - (str+agi+vit+ene));
 		break;
 	}
 
@@ -185,6 +191,7 @@ function calcDef (c, agi, defbuff, objAsa) {
 	var def = 0;
 	switch(c){
 		case 'bk':
+		def = agi/3;
 		break;
 		case 'sm':
 		def = agi/4;
@@ -210,6 +217,7 @@ function calcHP (c, lvl, vit, pvida) {
 	var hp = 0;
 	switch(c){
 		case 'bk':
+		hp = 35+(lvl-1)*2+(vit*3);
 		break;
 		case 'sm':
 		hp = 30+(lvl-1)+(vit*2);
@@ -236,6 +244,7 @@ function calcMP (c, lvl, ene) {
 	var mp = 0;
 	switch(c){
 		case 'bk':
+		mp = 10+(lvl-1)*0.5+ene;
 		break;
 		case 'sm':
 		mp = (lvl-1)*2+(ene*2);
@@ -260,6 +269,7 @@ function calcAG(c, ene,vit,agi,str){
 	var ag = 0;
 	switch(c){
 		case 'bk':
+		ag = (ene+vit)*(0.3+agi)*(0.2+str)*0.15;
 		break;
 		case 'sm':
 		ag = (ene*0.2)+(vit*0.3)+(agi*0.4)+(str*0.2);
@@ -281,6 +291,7 @@ function calcSpeed (c, agi) {
 	var speed = 0;
 	switch(c){
 		case 'bk':
+		speed = agi / 15;
 		break;
 		case 'sm':
 		speed = agi / 10;
@@ -318,6 +329,11 @@ function calcWDmg(objDmg, objOpt, ene){
 function calcPDmg(c, objDmg, objOpt, str, ene, agi){
 
 	switch(c){
+		case 'bk':
+		objDmg.pmindmg = str/6;
+		objDmg.pmaxdmg = str/4;
+		objDmg.cbdmg = (str+agi+ene)/2;
+		break;
 		case 'me':
 		objDmg.pmindmg = (str/14)+(agi/7);
 		objDmg.pmaxdmg = (str/8)+(agi/4);
@@ -342,7 +358,15 @@ function calcPDmg(c, objDmg, objOpt, str, ene, agi){
 	objDmg.pmaxdmg += objOpt.dmgbuff;
 	objDmg.pmaxdmg *= (1+objOpt.iatasa) * (1+(objOpt.imp*0.3));
 
+	objDmg.cbdmg += objOpt.wpmax;
+	objDmg.cbdmg *= (1+(objOpt.pen*0.02)) * (1+(objOpt.stf*0.02));
+	objDmg.cbdmg += objOpt.dmgbuff;
+	objDmg.cbdmg *= (1+objOpt.iatasa) * (1+(objOpt.imp*0.3));
+
 	switch(c){
+		case 'bk':
+		t = 200 + (ene/10);
+		break;
 		case 'me':
 		t = 100;
 		break;
@@ -355,15 +379,23 @@ function calcPDmg(c, objDmg, objOpt, str, ene, agi){
 	}
 
 	t /= 100;
+
 	objDmg.pmindmg *= t;
 	objDmg.pmaxdmg *= t;
+	// Confirmar
+	//objDmg.cbdmg *= t;
+	
 	objDmg.pmindmg |= 0;
 	objDmg.pmaxdmg |= 0;
+	objDmg.cbdmg |= 0;
 }
 
 function calcDmg (c, objDmg, objOpt, str, agi, ene, cmd) {
 
 	switch(c){
+		case 'bk':
+		calcPDmg(c, objDmg, objOpt, str, ene, agi);
+		break;
 		case 'sm':
 		calcWDmg(objDmg, objOpt, ene);
 		break;
@@ -390,6 +422,12 @@ function calcRate(c, objRate, lvl, agi, str){
 	// CORRIGIR ISSO
 	var cmd = 32500;
 	switch(c){
+		case 'bk':
+		objRate.pvmdr = agi/3;
+		objRate.pvmar = ((lvl*5+(agi*3))/2+str/4) | 0;
+		objRate.pvpdr = (lvl*2+agi*0.5) | 0;
+		objRate.pvpar = (lvl*3+agi*4.5) | 0;
+		break;
 		case 'sm':
 		objRate.pvmdr = agi/3;
 		objRate.pvmar = ((lvl*5+(agi*3))/2+str/4) | 0;
@@ -711,6 +749,78 @@ function refreshDL(e){
 	$('oFBMinphyDmg').value = objDmg.fbmindmg;
 	$('oFBMaxphyDmg').value = objDmg.fbmaxdmg;
 	$('oFBExcphyDmg').value = objDmg.fbexcdmg;
+	$('oHP').value = hp;
+	$('oMP').value = mp;
+	$('oAG').value = ag;
+	$('oSD').value = sd;
+	$('oDef').value = def;
+	$('oDefp').value = sample;
+	$('oSpeed').value = speed;
+	$('oPvmDr').value = objRate.pvmdr;
+	$('oPvmAr').value = objRate.pvmar;
+	$('oPvpDr').value = objRate.pvpdr;
+	$('oPvpAr').value = objRate.pvpar;
+}
+
+function refreshBK(e){
+
+	var sender = (e && e.target) || (window.event && window.event.srcElement);
+	var prefix = (sender.id).substring(0,5);
+	var c = document.getElementById((sender.id).substring(0,4)).className;
+	var $ = function( id ) { return document.getElementById( prefix + id ); };
+	if (!sanitycheck(prefix)) return;
+	var str = +$('iStr').value;
+	var agi = +$('iAgi').value;
+	var vit = +$('iVit').value;
+	var ene = +$('iEne').value;
+	var lvl = +$('iLevel').value;
+	var reset = +$('iResets').value;
+	var pvida = +$('iSVida').value;
+	var pdimi = +$('iSDiminui').value;
+	var pddi = +$('iSDDI').value;
+	var ppvm = +$('iSPvm').value;
+	var wpmin = 0;
+	var wpmax = 0;
+	if (+$('iSWpmin').value > 0)
+		wpmin = +$('iSWpmin').value;
+	if (+$('iSWpmax').value > 0)
+		wpmax = +$('iSWpmax').value;
+	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
+	var lasa = +$('iSLAsa').value;
+	var imp = +$('iSCImp').checked;
+	var addwp = +$('iSCStaff').checked;
+	var addpendant = +$('iSCPendant').checked;
+	var dmgbuff = 0;
+	var defbuff = 0;
+	if(+$('iBuffME').value > 0){
+		dmgbuff = ((+$('iBuffME').value / 7) + 3) | 0;
+		defbuff = ((+$('iBuffME').value / 8) + 2) | 0;
+	}
+	var sample = +$('iSampledmg').value;
+
+	var pontos = calcPontos(c, reset, lvl, str, agi, vit, ene);
+	var objAsa = {iatasa:0,Tiatasa:0,idfasa:0,Tidfasa:0,absasa:0,Tabsasa:0, lasa:lasa, tasa:tasa};
+	var speed = calcSpeed(c, agi);
+	speed += calcAsa(objAsa);
+	var hp = calcHP(c, lvl, vit, pvida);	
+	var mp = calcMP(c, lvl, ene);
+	var ag = calcAG(c, ene, vit, agi, str);
+	var def = calcDef(c, agi, defbuff, objAsa);
+	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi);
+	var sd = calcSD(str, agi, vit, ene, 0, def, lvl);
+	
+	var objDmg = {pmindmg:0,pmaxdmg:0,pexcdmg:0};
+	var objOpt = {pen:addpendant, stf:addwp, imp:imp,iatasa:objAsa.iatasa, dmgbuff:dmgbuff, wpmin:wpmin, wpmax:wpmax};
+	calcDmg(c, objDmg, objOpt, str, agi, ene, 0);
+
+	var objRate = {pvmdr:0, pvmar:0, pvpdr:0, pvpar:0, ppvm:ppvm};
+	calcRate(c, objRate, lvl, agi, str);
+
+	$('oPontos').value = pontos;
+	$('oMinphyDmg').value = objDmg.pmindmg;
+	$('oMaxphyDmg').value = objDmg.pmaxdmg;
+	$('oExcphyDmg').value = objDmg.pexcdmg;
+	$('oCBDmg').value = objDmg.cbdmg;
 	$('oHP').value = hp;
 	$('oMP').value = mp;
 	$('oAG').value = ag;
