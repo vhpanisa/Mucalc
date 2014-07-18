@@ -61,6 +61,9 @@ function addTab(){
 		case 4:
 		aux = $('modelMG').innerHTML;
 		break;
+		case 5:
+		aux = $('modelDL').innerHTML;
+		break;
 		default:
 		alert('Classe não implementada');
 		return;
@@ -76,6 +79,9 @@ function addTab(){
 		break;
 		case 4:
 		$(newTabID).classList.add('mg');
+		break;
+		case 5:
+		$(newTabID).classList.add('dl');
 		break;
 		default:
 		alert('Classe não implementada');
@@ -124,10 +130,17 @@ function calcPontos (c, reset, lvl, str, agi, vit, ene) {
 	}
 
 	var pontos = 0;
-	if (c != 'mg')
-		pontos = (100 + (280 * reset) + (exreset * 12) + (6 * (lvl-1)) - (str+agi+vit+ene));
-	else
+	switch(c){
+		case 'mg':
 		pontos = (100 + (340 * reset) + (exreset * 12) + (7 * (lvl-1)) - (str+agi+vit+ene));
+		break;
+		case 'dl':
+		pontos = (100 + (280 * reset) + (exreset * 12) + (7 * (lvl-1)) - (str+agi+vit+ene));
+		break;
+		default:
+		pontos = (100 + (340 * reset) + (exreset * 12) + (7 * (lvl-1)) - (str+agi+vit+ene));
+		break;
+	}
 
 	return pontos;
 }
@@ -183,6 +196,7 @@ function calcDef (c, agi, defbuff, objAsa) {
 		def = agi/5;
 		break;
 		case 'dl':
+		def = agi/7;
 		break;
 	}
 	
@@ -207,14 +221,15 @@ function calcHP (c, lvl, vit, pvida) {
 		hp = 58+(lvl-1)+(vit*2);
 		break;
 		case 'dl':
+		hp = 50+(lvl-1)*1.5+(vit*2);
 		break;
 	}
 
 	for (var i = 0; i < pvida; i++) {
-		hp = (hp*1.05) | 0;
+		hp = hp*1.05;
 	}
 
-	return hp;
+	return (hp | 0);
 }
 
 function calcMP (c, lvl, ene) {
@@ -232,13 +247,16 @@ function calcMP (c, lvl, ene) {
 		mp = 8+(lvl-1)+(ene*2);
 		break;
 		case 'dl':
+		mp = 40+(lvl-1)+(ene-15)*1.5;
 		break;
 	}
 
-	return mp;
+	return (mp | 0);
 }
 
 function calcAG(c, ene,vit,agi,str){
+	// CORRIGIR ISSO
+	var cmd = 32500;
 	var ag = 0;
 	switch(c){
 		case 'bk':
@@ -253,6 +271,7 @@ function calcAG(c, ene,vit,agi,str){
 		ag = (ene*0.15)+(vit*0.3)+(agi*0.25)+(str*0.2);
 		break;
 		case 'dl':
+		ag = (ene*0.15)+(vit*0.1)+(agi*0.2)+(str*0.3)+(cmd*0.3);
 		break;
 	}	
 	return (ag | 0);
@@ -273,6 +292,7 @@ function calcSpeed (c, agi) {
 		speed = agi / 15;
 		break;
 		case 'dl':
+		speed = agi / 10;
 		break;
 	}	
 	return (speed | 0);
@@ -306,6 +326,10 @@ function calcPDmg(c, objDmg, objOpt, str, ene, agi){
 		objDmg.pmindmg = (str/6)+(ene/12);
 		objDmg.pmaxdmg = (str/4)+(ene/8);
 		break;
+		case 'dl':
+		objDmg.pmindmg = (str/7)+(ene/14);
+		objDmg.pmaxdmg = (str/5)+(ene/10);
+		break;
 	}
 
 	objDmg.pmindmg += objOpt.wpmin;
@@ -325,6 +349,9 @@ function calcPDmg(c, objDmg, objOpt, str, ene, agi){
 		case 'mg':
 		t = 200;
 		break;
+		case 'dl':
+		t = 200 + (ene/20);
+		break;
 	}
 
 	t /= 100;
@@ -332,7 +359,6 @@ function calcPDmg(c, objDmg, objOpt, str, ene, agi){
 	objDmg.pmaxdmg *= t;
 	objDmg.pmindmg |= 0;
 	objDmg.pmaxdmg |= 0;
-
 }
 
 function calcDmg (c, objDmg, objOpt, str, agi, ene, cmd) {
@@ -348,6 +374,9 @@ function calcDmg (c, objDmg, objOpt, str, agi, ene, cmd) {
 		calcWDmg(objDmg, objOpt, ene);
 		calcPDmg(c, objDmg, objOpt, str, ene, agi);
 		break;
+		case 'dl':
+		calcPDmg(c, objDmg, objOpt, str, ene, agi);
+		break;
 	}
 
 	objDmg.wexcdmg = objDmg.wmaxdmg * 1.20;
@@ -358,25 +387,33 @@ function calcDmg (c, objDmg, objOpt, str, agi, ene, cmd) {
 }
 
 function calcRate(c, objRate, lvl, agi, str){
+	// CORRIGIR ISSO
+	var cmd = 32500;
 	switch(c){
 		case 'sm':
 		objRate.pvmdr = agi/3;
-		objRate.pvmar = (lvl*5+(agi*3)/2+str/4) | 0;
+		objRate.pvmar = ((lvl*5+(agi*3))/2+str/4) | 0;
 		objRate.pvpdr = (lvl*2+agi*0.25) | 0;
 		objRate.pvpar = (lvl*3+agi*4) | 0;
 		break;
 		case 'me':
 		objRate.pvmdr = agi/4;
-		objRate.pvmar = (lvl*5+(agi*3)/2+str/4) | 0;
+		objRate.pvmar = ((lvl*5+(agi*3))/2+(str/4)) | 0;
 		objRate.pvpdr = (lvl*2+agi*0.1) | 0;
 		objRate.pvpar = (lvl*3+agi*0.6) | 0;
 		break;
 		case 'mg':
 		objRate.pvmdr = agi/3;
-		objRate.pvmar = (lvl*5+(agi*3)/2+str/4) | 0;
+		objRate.pvmar = ((lvl*5+(agi*3))/2+(str/4)) | 0;
 		objRate.pvpdr = (lvl*2+agi*0.25) | 0;
 		objRate.pvpar = (lvl*3+agi*3.5) | 0;
-		break;		
+		break;
+		case 'dl':
+		objRate.pvmdr = agi/7;
+		objRate.pvmar = ((lvl*5+(agi*5))/2+(str/6)+(cmd/10)) | 0;
+		objRate.pvpdr = (lvl*2+agi*0.5) | 0;
+		objRate.pvpar = (lvl*3+agi*4) | 0;
+		break;
 	}
 
 	for (var i = 0; i < objRate.ppvm; i++) {
@@ -585,7 +622,7 @@ function refreshMG(e){
 	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi);
 	var sd = calcSD(str, agi, vit, ene, 0, def, lvl);
 	
-	var objDmg = {wmindmg:0,wmaxdmg:0,wexcdmg:0};
+	var objDmg = {wmindmg:0,wmaxdmg:0,wexcdmg:0,pmindmg:0,pmaxdmg:0,pexcdmg:0};
 	var objOpt = {pen:addpendant, stf:addwp, stfp:staff, imp:imp,iatasa:objAsa.iatasa, dmgbuff:dmgbuff, wpmin:wpmin, wpmax:wpmax};
 	calcDmg(c, objDmg, objOpt, str, agi, ene, 0);
 
@@ -599,6 +636,81 @@ function refreshMG(e){
 	$('oMinphyDmg').value = objDmg.pmindmg;
 	$('oMaxphyDmg').value = objDmg.pmaxdmg;
 	$('oExcphyDmg').value = objDmg.pexcdmg;
+	$('oHP').value = hp;
+	$('oMP').value = mp;
+	$('oAG').value = ag;
+	$('oSD').value = sd;
+	$('oDef').value = def;
+	$('oDefp').value = sample;
+	$('oSpeed').value = speed;
+	$('oPvmDr').value = objRate.pvmdr;
+	$('oPvmAr').value = objRate.pvmar;
+	$('oPvpDr').value = objRate.pvpdr;
+	$('oPvpAr').value = objRate.pvpar;
+}
+
+function refreshDL(e){
+
+	var sender = (e && e.target) || (window.event && window.event.srcElement);
+	var prefix = (sender.id).substring(0,5);
+	var c = document.getElementById((sender.id).substring(0,4)).className;
+	var $ = function( id ) { return document.getElementById( prefix + id ); };
+	if (!sanitycheck(prefix)) return;
+	var str = +$('iStr').value;
+	var agi = +$('iAgi').value;
+	var vit = +$('iVit').value;
+	var ene = +$('iEne').value;
+	var cmd = +$('iCmd').value;
+	var lvl = +$('iLevel').value;
+	var reset = +$('iResets').value;
+	var pvida = +$('iSVida').value;
+	var pdimi = +$('iSDiminui').value;
+	var pddi = +$('iSDDI').value;
+	var ppvm = +$('iSPvm').value;
+	var wpmin = 0;
+	var wpmax = 0;
+	if (+$('iSWpmin').value > 0)
+		wpmin = +$('iSWpmin').value;
+	if (+$('iSWpmax').value > 0)
+		wpmax = +$('iSWpmax').value;
+	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
+	var lasa = +$('iSLAsa').value;
+	var imp = +$('iSCImp').checked;
+	var addwp = +$('iSCStaff').checked;
+	var addpendant = +$('iSCPendant').checked;
+	var dmgbuff = 0;
+	var defbuff = 0;
+	if(+$('iBuffME').value > 0){
+		dmgbuff = ((+$('iBuffME').value / 7) + 3) | 0;
+		defbuff = ((+$('iBuffME').value / 8) + 2) | 0;
+	}
+	var sample = +$('iSampledmg').value;
+
+	var pontos = calcPontos(c, reset, lvl, str, agi, vit, ene);
+	var objAsa = {iatasa:0,Tiatasa:0,idfasa:0,Tidfasa:0,absasa:0,Tabsasa:0, lasa:lasa, tasa:tasa};
+	var speed = calcSpeed(c, agi);
+	speed += calcAsa(objAsa);
+	var hp = calcHP(c, lvl, vit, pvida);	
+	var mp = calcMP(c, lvl, ene);
+	var ag = calcAG(c, ene, vit, agi, str);
+	var def = calcDef(c, agi, defbuff, objAsa);
+	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi);
+	var sd = calcSD(str, agi, vit, ene, cmd, def, lvl);
+	
+	var objDmg = {pmindmg:0,pmaxdmg:0,pexcdmg:0};
+	var objOpt = {pen:addpendant, stf:addwp, imp:imp,iatasa:objAsa.iatasa, dmgbuff:dmgbuff, wpmin:wpmin, wpmax:wpmax};
+	calcDmg(c, objDmg, objOpt, str, agi, ene, 0);
+
+	var objRate = {pvmdr:0, pvmar:0, pvpdr:0, pvpar:0, ppvm:ppvm};
+	calcRate(c, objRate, lvl, agi, str);
+
+	$('oPontos').value = pontos;
+	$('oMinphyDmg').value = objDmg.pmindmg;
+	$('oMaxphyDmg').value = objDmg.pmaxdmg;
+	$('oExcphyDmg').value = objDmg.pexcdmg;
+	$('oFBMinphyDmg').value = objDmg.fbmindmg;
+	$('oFBMaxphyDmg').value = objDmg.fbmaxdmg;
+	$('oFBExcphyDmg').value = objDmg.fbexcdmg;
 	$('oHP').value = hp;
 	$('oMP').value = mp;
 	$('oAG').value = ag;

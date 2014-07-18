@@ -4,7 +4,7 @@ article.tabs
 	display: block;
 	width: auto;
 	height: auto;
-	margin: 2em auto;
+	margin: 1em auto;
 }
 
 article.tabs section
@@ -66,6 +66,7 @@ article.tabs section:nth-child(6) h2
 {
 	left: 620px;
 }
+
 /*
 article.tabs section:nth-child(7) h2
 {
@@ -77,6 +78,7 @@ article.tabs section:nth-child(8) h2
 	left: 864px;
 }
 */
+
 article.tabs section h2 a
 {
 	display: block;
@@ -113,6 +115,12 @@ article.tabs .me:target h2
 	background-color: #5AAB1D;
 }
 
+article.tabs .dl:target,
+article.tabs .dl:target h2
+{
+	background-color: #222222;
+}
+
 article.tabs section,
 article.tabs section h2
 {
@@ -126,13 +134,13 @@ article.tabs section h2
 input[type="text"],
 input[type="number"]
 {
-	width: 50px;
+	width: 58px;
 	vertical-align: top;	
 }
 
 select
 {
-	width: 54px;
+	width: 62px;
 	vertical-align: top;
 }
 
@@ -140,4 +148,3 @@ fieldset
 {
 	display:inline-block
 }
-

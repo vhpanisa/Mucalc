@@ -126,19 +126,19 @@ MG
 DL
 ==
 
-[ ] Min dmg = str/7+ene/14
-[ ] Max dmg = str/5+ene/10
-[ ] Speed = agi/10
-[ ] Defense = agi/7
+[X] Min dmg = str/7+ene/14
+[X] Max dmg = str/5+ene/10
+[X] Speed = agi/10
+[X] Defense = agi/7
 [ ] PvM defense rate = agi/7
 [ ] PvM attack rate = lvl*5+(agi*5)/2+str/6+cmd/10
 [ ] PvP defense rate = lvl*2+agi*0.5
 [ ] PvP attack rate = lvl*3+agi*4
-[ ] HP = 50+(lvl-1)*1.5+vit*2
-[ ] Mana = 40+(lvl-1)+(ene-15)*1.5
+[X] HP = 50+(lvl-1)*1.5+vit*2
+[X] Mana = 40+(lvl-1)+(ene-15)*1.5
 [ ] Mana regen = mana/27.5
 [ ] SD = (str+agi+vit+ene+cmd)*1.2+defense/2+(lvl*lvl)/30
-[ ] AG = ene*0.15+vit*0.1+agi*0.2+str*0.3+cmd*0.3
+[X] AG = ene*0.15+vit*0.1+agi*0.2+str*0.3+cmd*0.3
 [ ] AG regen = 1.9+AG/33
 [ ] Skill % = 200+ene/20
 [ ] Critical dmg = cmd/25+str/30
