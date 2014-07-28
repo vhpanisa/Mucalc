@@ -43,6 +43,115 @@ function sanitycheck(prefix){
 	return flag;
 }
 
+function bugmp(mp){
+	if(mp > 65535)
+		return true;
+	return false;
+}
+
+function bugvelo(c, speed){
+	switch(c){
+		case 'sm':
+		if(speed < 436)
+			return 0;
+		else if(speed >= 446 && speed <= 456)
+			return 1;
+		else if(speed >= 456 && speed <= 586)
+			return 0;
+		else if(speed >= 596 && speed <= 666)
+			return 1;
+		else if(speed >= 676 && speed <= 836)
+			return 0;
+		else if(speed >= 846 && speed <= 1006)
+			return 1;
+		else if(speed >= 1016 && speed <= 1076)
+			return 2;
+		else if (speed == 1086)
+			return 1;
+		else if(speed >= 1096 && speed <= 1336)
+			return 0;
+		else if(speed >= 1346 && speed <= 1576)
+			return 1;
+		else if(speed >= 1586 && speed <= 2326)
+			return 2;
+		else if (speed == 2336)
+			return 1;
+		else if(speed >= 2346 && speed <= 2836)
+			return 0;
+		else if(speed >= 2846)
+			return 1;
+		else
+			return 1;
+		break;
+		case 'mg':
+		if(speed <= 526)
+			return 0;
+		else if(speed >= 526 && speed <= 553)
+			return 1;
+		else if(speed >= 553 && speed <= 726)
+			return 0;
+		else if(speed >= 726 && speed <= 833)
+			return 1;
+		else if(speed >= 833 && speed <= 1040)
+			return 0;
+		else if(speed >= 1040 && speed <= 21000)
+			return 1;
+		else if(speed >= 1400 && speed <= 1706)
+			return 0;
+		else if(speed >= 1706 && speed <= 2033)
+			return 1;
+		else if(speed >= 2033)
+			return 2;
+		else
+			return 1;
+		break;
+		case 'dl':
+		if(speed <= 190)
+			return 0;
+		else if (speed == 200)
+			return 1;
+		else if(speed >= 210 && speed <= 270)
+			return 0;
+		else if(speed >= 280 && speed <= 310)
+			return 1;
+		else if(speed >= 320 && speed <= 390)
+			return 0;
+		else if(speed >= 400 && speed <= 520)
+			return 1;
+		else if(speed >= 530 && speed <= 640)
+			return 0;
+		else if(speed >= 650 && speed <= 1140)
+			return 1;
+		else if(speed >= 1150 && speed <= 1390)
+			return 0;
+		else if(speed >= 1400 && speed <= 3250)
+			return 1;
+		break;
+	}
+}
+
+function bugcheck(c, objBug, prefix){
+
+	var $ = function( id ) { return document.getElementById( prefix + id ); };
+
+	$('oMP').style['background-color'] = '';
+	if(bugmp(objBug.mp))
+		$('oMP').style['background-color'] = 'yellow';
+
+	switch(bugvelo(c,objBug.speed)){
+		case 0:
+		$('oSpeed').style['background-color'] = '';
+		break;
+		case 1:
+		$('oSpeed').style['background-color'] = 'yellow';
+		break;
+		case 2:
+		$('oSpeed').style['background-color'] = 'orange';
+		break;
+	}
+
+}
+
 function addTab(){
 	var newTabID = $('tabs').getElementsByTagName('section').length - 1;
 	if (newTabID+1 >= 6) return;
@@ -93,7 +202,7 @@ function addTab(){
 		alert('Classe não implementada');
 		return;
 	}
-	
+
 	$(newTabID).getElementsByTagName('a')[0].href = '#'+ newTabID; 
 
 	var matches = [];
@@ -206,7 +315,7 @@ function calcDef (c, agi, defbuff, objAsa) {
 		def = agi/7;
 		break;
 	}
-	
+
 	def += defbuff;
 	def += (objAsa.Tidfasa * objAsa.lasa);
 
@@ -263,25 +372,23 @@ function calcMP (c, lvl, ene) {
 	return (mp | 0);
 }
 
-function calcAG(c, ene,vit,agi,str){
-	// CORRIGIR ISSO
-	var cmd = 32500;
+function calcAG(c, objAttr){
 	var ag = 0;
 	switch(c){
 		case 'bk':
-		ag = (ene+vit)*(0.3+agi)*(0.2+str)*0.15;
+		ag = (objAttr.ene+objAttr.vit)*(0.3+objAttr.agi)*(0.2+objAttr.str)*0.15;
 		break;
 		case 'sm':
-		ag = (ene*0.2)+(vit*0.3)+(agi*0.4)+(str*0.2);
+		ag = (objAttr.ene*0.2)+(objAttr.vit*0.3)+(objAttr.agi*0.4)+(objAttr.str*0.2);
 		break;
 		case 'me':
-		ag = (ene*0.2)+(vit*0.3)+(agi*0.2)+(str*0.3);
+		ag = (objAttr.ene*0.2)+(objAttr.vit*0.3)+(objAttr.agi*0.2)+(objAttr.str*0.3);
 		break;
 		case 'mg':
-		ag = (ene*0.15)+(vit*0.3)+(agi*0.25)+(str*0.2);
+		ag = (objAttr.ene*0.15)+(objAttr.vit*0.3)+(objAttr.agi*0.25)+(objAttr.str*0.2);
 		break;
 		case 'dl':
-		ag = (ene*0.15)+(vit*0.1)+(agi*0.2)+(str*0.3)+(cmd*0.3);
+		ag = (objAttr.ene*0.15)+(objAttr.vit*0.1)+(objAttr.agi*0.2)+(objAttr.str*0.3)+(objAttr.cmd*0.3);
 		break;
 	}	
 	return (ag | 0);
@@ -309,18 +416,18 @@ function calcSpeed (c, agi) {
 	return (speed | 0);
 }
 
-function calcSD (str, agi, vit, ene, cmd, def, lvl) {
-	var sd = (str+agi+vit+ene+cmd) * 1.2 + def / 2 + lvl*lvl/ 30;
+function calcSD (objAttr, def, lvl) {
+	var sd = (objAttr.str+objAttr.agi+objAttr.vit+objAttr.ene+objAttr.cmd) * 1.2 + def / 2 + lvl*lvl/ 30;
 	return (sd | 0);
 }
 
 function calcWDmg(objDmg, objOpt, ene){
-	objDmg.wmindmg = (ene / 9) * (1+(objOpt.pen*0.02)) * (1+(objOpt.stf*0.02)) * (1+objOpt.stfp);
+	objDmg.wmindmg = (ene / 9) * (1+(objOpt.pen*0.02)) * (1+(objOpt.wp*0.02)) * (1+objOpt.stfp);
 	objDmg.wmindmg += objOpt.dmgbuff;
 	objDmg.wmindmg *= (1+objOpt.iatasa) * (1+(objOpt.imp*0.3));
 	objDmg.wmindmg |= 0;
 
-	objDmg.wmaxdmg = (ene / 4) * (1+(objOpt.pen*0.02)) * (1+(objOpt.stf*0.02)) * (1+objOpt.stfp);
+	objDmg.wmaxdmg = (ene / 4) * (1+(objOpt.pen*0.02)) * (1+(objOpt.wp*0.02)) * (1+objOpt.stfp);
 	objDmg.wmaxdmg += objOpt.dmgbuff;
 	objDmg.wmaxdmg *= (1+objOpt.iatasa) * (1+(objOpt.imp*0.3));
 	objDmg.wmaxdmg |= 0;
@@ -349,19 +456,22 @@ function calcPDmg(c, objDmg, objOpt, str, ene, agi){
 	}
 
 	objDmg.pmindmg += objOpt.wpmin;
-	objDmg.pmindmg *= (1+(objOpt.pen*0.02)) * (1+(objOpt.stf*0.02));
+	objDmg.pmindmg *= (1+(objOpt.pen*0.02)) * (1+(objOpt.wp*0.02));
 	objDmg.pmindmg += objOpt.dmgbuff;
 	objDmg.pmindmg *= (1+objOpt.iatasa) * (1+(objOpt.imp*0.3));
 
 	objDmg.pmaxdmg += objOpt.wpmax;
-	objDmg.pmaxdmg *= (1+(objOpt.pen*0.02)) * (1+(objOpt.stf*0.02));
+	objDmg.pmaxdmg *= (1+(objOpt.pen*0.02)) * (1+(objOpt.wp*0.02));
 	objDmg.pmaxdmg += objOpt.dmgbuff;
 	objDmg.pmaxdmg *= (1+objOpt.iatasa) * (1+(objOpt.imp*0.3));
 
-	objDmg.cbdmg += objOpt.wpmax;
-	objDmg.cbdmg *= (1+(objOpt.pen*0.02)) * (1+(objOpt.stf*0.02));
-	objDmg.cbdmg += objOpt.dmgbuff;
-	objDmg.cbdmg *= (1+objOpt.iatasa) * (1+(objOpt.imp*0.3));
+	if(c == 'bk'){
+		objDmg.cbdmg += objOpt.wpmax;
+		objDmg.cbdmg *= (1+(objOpt.pen*0.02)) * (1+(objOpt.wp*0.02));
+		objDmg.cbdmg += objOpt.dmgbuff;
+		objDmg.cbdmg *= (1+objOpt.iatasa) * (1+(objOpt.imp*0.3));
+		objDmg.cbdmg |= 0;
+	}
 
 	switch(c){
 		case 'bk':
@@ -382,12 +492,9 @@ function calcPDmg(c, objDmg, objOpt, str, ene, agi){
 
 	objDmg.pmindmg *= t;
 	objDmg.pmaxdmg *= t;
-	// Confirmar
-	//objDmg.cbdmg *= t;
-	
+
 	objDmg.pmindmg |= 0;
-	objDmg.pmaxdmg |= 0;
-	objDmg.cbdmg |= 0;
+	objDmg.pmaxdmg |= 0;	
 }
 
 function calcDmg (c, objDmg, objOpt, str, agi, ene, cmd) {
@@ -415,42 +522,40 @@ function calcDmg (c, objDmg, objOpt, str, agi, ene, cmd) {
 	objDmg.wexcdmg |= 0;
 	objDmg.pexcdmg = objDmg.pmaxdmg * 1.20;
 	objDmg.pexcdmg |= 0;
-	
+
 }
 
-function calcRate(c, objRate, lvl, agi, str){
-	// CORRIGIR ISSO
-	var cmd = 32500;
+function calcRate(c, objRate, lvl, objAttr){
 	switch(c){
 		case 'bk':
-		objRate.pvmdr = agi/3;
-		objRate.pvmar = ((lvl*5+(agi*3))/2+str/4) | 0;
-		objRate.pvpdr = (lvl*2+agi*0.5) | 0;
-		objRate.pvpar = (lvl*3+agi*4.5) | 0;
+		objRate.pvmdr = objAttr.agi/3;
+		objRate.pvmar = ((lvl*5+(objAttr.agi*3))/2+objAttr.str/4) | 0;
+		objRate.pvpdr = (lvl*2+objAttr.agi*0.5) | 0;
+		objRate.pvpar = (lvl*3+objAttr.agi*4.5) | 0;
 		break;
 		case 'sm':
-		objRate.pvmdr = agi/3;
-		objRate.pvmar = ((lvl*5+(agi*3))/2+str/4) | 0;
-		objRate.pvpdr = (lvl*2+agi*0.25) | 0;
-		objRate.pvpar = (lvl*3+agi*4) | 0;
+		objRate.pvmdr = objAttr.agi/3;
+		objRate.pvmar = ((lvl*5+(objAttr.agi*3))/2+objAttr.str/4) | 0;
+		objRate.pvpdr = (lvl*2+objAttr.agi*0.25) | 0;
+		objRate.pvpar = (lvl*3+objAttr.agi*4) | 0;
 		break;
 		case 'me':
-		objRate.pvmdr = agi/4;
-		objRate.pvmar = ((lvl*5+(agi*3))/2+(str/4)) | 0;
-		objRate.pvpdr = (lvl*2+agi*0.1) | 0;
-		objRate.pvpar = (lvl*3+agi*0.6) | 0;
+		objRate.pvmdr = objAttr.agi/4;
+		objRate.pvmar = ((lvl*5+(objAttr.agi*3))/2+(objAttr.str/4)) | 0;
+		objRate.pvpdr = (lvl*2+objAttr.agi*0.1) | 0;
+		objRate.pvpar = (lvl*3+objAttr.agi*0.6) | 0;
 		break;
 		case 'mg':
-		objRate.pvmdr = agi/3;
-		objRate.pvmar = ((lvl*5+(agi*3))/2+(str/4)) | 0;
-		objRate.pvpdr = (lvl*2+agi*0.25) | 0;
-		objRate.pvpar = (lvl*3+agi*3.5) | 0;
+		objRate.pvmdr = objAttr.agi/3;
+		objRate.pvmar = ((lvl*5+(objAttr.agi*3))/2+(objAttr.str/4)) | 0;
+		objRate.pvpdr = (lvl*2+objAttr.agi*0.25) | 0;
+		objRate.pvpar = (lvl*3+objAttr.agi*3.5) | 0;
 		break;
 		case 'dl':
-		objRate.pvmdr = agi/7;
-		objRate.pvmar = ((lvl*5+(agi*5))/2+(str/6)+(cmd/10)) | 0;
-		objRate.pvpdr = (lvl*2+agi*0.5) | 0;
-		objRate.pvpar = (lvl*3+agi*4) | 0;
+		objRate.pvmdr = objAttr.agi/7;
+		objRate.pvmar = ((lvl*5+(objAttr.agi*5))/2+(objAttr.str/6)+(objAttr.cmd/10)) | 0;
+		objRate.pvpdr = (lvl*2+objAttr.agi*0.5) | 0;
+		objRate.pvpar = (lvl*3+objAttr.agi*4) | 0;
 		break;
 	}
 
@@ -461,118 +566,69 @@ function calcRate(c, objRate, lvl, agi, str){
 	objRate.pvmdr |= 0;
 }
 
-function refreshSM(e){
 
+function refresh(e){
 	var sender = (e && e.target) || (window.event && window.event.srcElement);
-	var prefix = (sender.id).substring(0,5);	
-	var c = document.getElementById((sender.id).substring(0,4)).className;
+	var prefix = (sender.id).substring(0,5);
+	try{var c = document.getElementById((sender.id).substring(0,4)).className;}
+	catch(err){return;}
 	var $ = function( id ) { return document.getElementById( prefix + id ); };
 	if (!sanitycheck(prefix)) return;
 	var str = +$('iStr').value;
 	var agi = +$('iAgi').value;
 	var vit = +$('iVit').value;
 	var ene = +$('iEne').value;
+
+	if(c == 'dl')
+		var cmd = +$('iCmd').value;
+	else
+		var cmd = 0;
+
+	var objAttr = {str:str, agi:agi, vit:vit, ene:ene, cmd:cmd};
+
 	var lvl = +$('iLevel').value;
 	var reset = +$('iResets').value;
 	var pvida = +$('iSVida').value;
 	var pdimi = +$('iSDiminui').value;
 	var pddi = +$('iSDDI').value;
 	var ppvm = +$('iSPvm').value;
-	var staff = (+$('iSStaff').value) / 100;
+	if(c == 'sm' || c == 'mg')
+		var staff = (+$('iSStaff').value) / 100;
 	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
 	var lasa = +$('iSLAsa').value;
 	var imp = +$('iSCImp').checked;
-	var addwp = +$('iSCStaff').checked;
+	var addwp = +$('iSCWp').checked;
 	var addpendant = +$('iSCPendant').checked;
 	var dmgbuff = 0;
 	var defbuff = 0;
 	var sample = +$('iSampledmg').value;
+	if(c != 'sm'){
+		var wpmin = 0;
+		var wpmax = 0;
+		if(+$('iSWpmin').value > 0)
+			wpmin = +$('iSWpmin').value;
+		if(+$('iSWpmax').value > 0)
+			wpmax = +$('iSWpmax').value;
+	}
+
+	if (c == 'me'){
+		if (+$('iSCSelf').checked == 1){
+			$('iBuffME').value = $('iEne').value;
+			$('iBuffME').disabled = true;
+		}else{
+			$('iBuffME').value = 0;
+			$('iBuffME').disabled = false;
+		}
+	}
+
 	if(+$('iBuffME').value > 0){
 		dmgbuff = ((+$('iBuffME').value / 7) + 3) | 0;
 		defbuff = ((+$('iBuffME').value / 8) + 2) | 0;
 	}
 
-	var pontos = calcPontos(c, reset, lvl, str, agi, vit, ene);
-	var objAsa = {iatasa:0,Tiatasa:0,idfasa:0,Tidfasa:0,absasa:0,Tabsasa:0, lasa:lasa, tasa:tasa};
-	var speed = calcSpeed(c, agi);
-	speed += calcAsa(objAsa);
-	var hp = calcHP(c, lvl, vit, pvida);	
-	var mp = calcMP(c, lvl, ene);
-	var ag = calcAG(c, ene, vit, agi, str);
-	var def = calcDef(c, agi, defbuff, objAsa);
-	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi);
-	var sd = calcSD(str, agi, vit, ene, 0, def, lvl);
-
-	var objDmg = {wmindmg:0,wmaxdmg:0,wexcdmg:0};
-	var objOpt = {pen:addpendant, stf:addwp, stfp:staff, imp:imp, iatasa:objAsa.iatasa, dmgbuff:dmgbuff};
-	calcDmg(c, objDmg, objOpt, str, agi, ene, 0);
-	
-	var objRate = {pvmdr:0, pvmar:0, pvpdr:0, pvpar:0, ppvm:ppvm};
-	calcRate(c, objRate, lvl, agi, str);
-
-	$('oPontos').value = pontos;
-	$('oMinDmg').value = objDmg.wmindmg;
-	$('oMaxDmg').value = objDmg.wmaxdmg;
-	$('oExcDmg').value = objDmg.wexcdmg;
-	$('oHP').value = hp;
-	$('oMP').value = mp;
-	$('oAG').value = ag;
-	$('oSD').value = sd;
-	$('oDef').value = def;
-	$('oDefp').value = sample;
-	$('oSpeed').value = speed;
-	$('oPvmDr').value = objRate.pvmdr;
-	$('oPvmAr').value = objRate.pvmar;
-	$('oPvpDr').value = objRate.pvpdr;
-	$('oPvpAr').value = objRate.pvpar;
-
-}
-
-function refreshME(e){
-	var sender = (e && e.target) || (window.event && window.event.srcElement);
-	var prefix = (sender.id).substring(0,5);
-	var c = document.getElementById((sender.id).substring(0,4)).className;
-	var $ = function( id ) { return document.getElementById( prefix + id ); };
-	if (!sanitycheck(prefix)) return;
-	if (+$('iSCSelf').checked == 1){
-		$('iBuffME').value = $('iEne').value;
-		$('iBuffME').disabled = true;
-	}else{
-		$('iBuffME').value = 0;
-		$('iBuffME').disabled = false;
-	}
-	var str = +$('iStr').value;
-	var agi = +$('iAgi').value;
-	var vit = +$('iVit').value;
-	var ene = +$('iEne').value;
-	var lvl = +$('iLevel').value;
-	var reset = +$('iResets').value;
-	var pvida = +$('iSVida').value;
-	var pdimi = +$('iSDiminui').value;
-	var pddi = +$('iSDDI').value;
-	var ppvm = +$('iSPvm').value;
-	var bowmin = 0;
-	var bowmax = 0;
-	if(+$('iSBowmin').value > 0)
-		bowmin = +$('iSBowmin').value;
-	if(+$('iSBowmax').value > 0)
-		bowmax = +$('iSBowmax').value;
-	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
-	var lasa = +$('iSLAsa').value;
-	var imp = +$('iSCImp').checked;
-	var addwp = +$('iSCBow').checked;
-	var addpendant = +$('iSCPendant').checked;	
-	var dmgbuff = 0;
-	var defbuff = 0;
-	if(+$('iBuffME').value > 0){
-		dmgbuff = ((+$('iBuffME').value / 7) + 3) | 0;
-		defbuff = ((+$('iBuffME').value / 8) + 2) | 0;
-		
-	}		
 	var red = ((ene/7)+3) | 0;
 	var	green = ((ene/8)+2) | 0;
 	var	blue = ((ene/5)+5) | 0;
-	var sample = +$('iSampledmg').value;
 
 	var pontos = calcPontos(c, reset, lvl, str, agi, vit, ene);
 	var objAsa = {iatasa:0,Tiatasa:0,idfasa:0,Tidfasa:0,absasa:0,Tabsasa:0, lasa:lasa, tasa:tasa};
@@ -580,247 +636,37 @@ function refreshME(e){
 	speed += calcAsa(objAsa);
 	var hp = calcHP(c, lvl, vit, pvida);	
 	var mp = calcMP(c, lvl, ene);
-	var ag = calcAG(c, ene, vit, agi, str);
+	var ag = calcAG(c, objAttr);
 	var def = calcDef(c, agi, defbuff, objAsa);
 	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi);
-	var sd = calcSD(str, agi, vit, ene, 0, def, lvl);
+	var sd = calcSD(objAttr, def, lvl);
 
-	var objDmg = {pmindmg:0,pmaxdmg:0,pexcdmg:0};
-	var objOpt = {pen:addpendant, stf:addwp, imp:imp, iatasa:objAsa.iatasa, dmgbuff:dmgbuff, wpmin:bowmin, wpmax:bowmax};
-	calcDmg(c, objDmg, objOpt, str, agi, ene, 0);
-	
+	var objDmg = {};
+	var objOpt = {pen:addpendant, wp:addwp, stfp:staff, imp:imp, iatasa:objAsa.iatasa, dmgbuff:dmgbuff, wpmin:wpmin, wpmax:wpmax};
+	calcDmg(c, objDmg, objOpt, str, agi, ene, cmd);
+
 	var objRate = {pvmdr:0, pvmar:0, pvpdr:0, pvpar:0, ppvm:ppvm};
-	calcRate(c, objRate, lvl, agi, str);
+	calcRate(c, objRate, lvl, objAttr);
 
 	$('oPontos').value = pontos;
-	$('oMinDmg').value = objDmg.pmindmg;
-	$('oMaxDmg').value = objDmg.pmaxdmg;
-	$('oExcDmg').value = objDmg.pexcdmg;
-	$('oHP').value = hp;
-	$('oMP').value = mp;
-	$('oAG').value = ag;
-	$('oSD').value = sd;
-	$('oDef').value = def;
-	$('oDefp').value = sample;
-	$('oSpeed').value = speed;
-	$('oPvmDr').value = objRate.pvmdr;
-	$('oPvmAr').value = objRate.pvmar;
-	$('oPvpDr').value = objRate.pvpdr;
-	$('oPvpAr').value = objRate.pvpar;
-	$('oBuffRed').value = red;
-	$('oBuffGreen').value = green;
-	$('oBuffBlue').value = blue;
-}
-
-function refreshMG(e){
-
-	var sender = (e && e.target) || (window.event && window.event.srcElement);
-	var prefix = (sender.id).substring(0,5);
-	var c = document.getElementById((sender.id).substring(0,4)).className;
-	var $ = function( id ) { return document.getElementById( prefix + id ); };
-	if (!sanitycheck(prefix)) return;
-	var str = +$('iStr').value;
-	var agi = +$('iAgi').value;
-	var vit = +$('iVit').value;
-	var ene = +$('iEne').value;
-	var lvl = +$('iLevel').value;
-	var reset = +$('iResets').value;
-	var pvida = +$('iSVida').value;
-	var pdimi = +$('iSDiminui').value;
-	var pddi = +$('iSDDI').value;
-	var ppvm = +$('iSPvm').value;
-	var wpmin = 0;
-	var wpmax = 0;
-	if (+$('iSWpmin').value > 0)
-		wpmin = +$('iSWpmin').value;
-	if (+$('iSWpmax').value > 0)
-		wpmax = +$('iSWpmax').value;
-	var staff = (+$('iSStaff').value) / 100;
-	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
-	var lasa = +$('iSLAsa').value;
-	var imp = +$('iSCImp').checked;
-	var addwp = +$('iSCStaff').checked;
-	var addpendant = +$('iSCPendant').checked;
-	var dmgbuff = 0;
-	var defbuff = 0;
-	if(+$('iBuffME').value > 0){
-		dmgbuff = ((+$('iBuffME').value / 7) + 3) | 0;
-		defbuff = ((+$('iBuffME').value / 8) + 2) | 0;
+	if(c == 'sm' || c == 'mg'){
+		$('oMinwizDmg').value = objDmg.wmindmg;
+		$('oMaxwizDmg').value = objDmg.wmaxdmg;
+		$('oExcwizDmg').value = objDmg.wexcdmg;
 	}
-	var sample = +$('iSampledmg').value;
-
-	var pontos = calcPontos(c, reset, lvl, str, agi, vit, ene);
-	var objAsa = {iatasa:0,Tiatasa:0,idfasa:0,Tidfasa:0,absasa:0,Tabsasa:0, lasa:lasa, tasa:tasa};
-	var speed = calcSpeed(c, agi);
-	speed += calcAsa(objAsa);
-	var hp = calcHP(c, lvl, vit, pvida);	
-	var mp = calcMP(c, lvl, ene);
-	var ag = calcAG(c, ene, vit, agi, str);
-	var def = calcDef(c, agi, defbuff, objAsa);
-	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi);
-	var sd = calcSD(str, agi, vit, ene, 0, def, lvl);
-	
-	var objDmg = {wmindmg:0,wmaxdmg:0,wexcdmg:0,pmindmg:0,pmaxdmg:0,pexcdmg:0};
-	var objOpt = {pen:addpendant, stf:addwp, stfp:staff, imp:imp,iatasa:objAsa.iatasa, dmgbuff:dmgbuff, wpmin:wpmin, wpmax:wpmax};
-	calcDmg(c, objDmg, objOpt, str, agi, ene, 0);
-
-	var objRate = {pvmdr:0, pvmar:0, pvpdr:0, pvpar:0, ppvm:ppvm};
-	calcRate(c, objRate, lvl, agi, str);
-
-	$('oPontos').value = pontos;
-	$('oMinwizDmg').value = objDmg.wmindmg;
-	$('oMaxwizDmg').value = objDmg.wmaxdmg;
-	$('oExcwizDmg').value = objDmg.wexcdmg;
-	$('oMinphyDmg').value = objDmg.pmindmg;
-	$('oMaxphyDmg').value = objDmg.pmaxdmg;
-	$('oExcphyDmg').value = objDmg.pexcdmg;
-	$('oHP').value = hp;
-	$('oMP').value = mp;
-	$('oAG').value = ag;
-	$('oSD').value = sd;
-	$('oDef').value = def;
-	$('oDefp').value = sample;
-	$('oSpeed').value = speed;
-	$('oPvmDr').value = objRate.pvmdr;
-	$('oPvmAr').value = objRate.pvmar;
-	$('oPvpDr').value = objRate.pvpdr;
-	$('oPvpAr').value = objRate.pvpar;
-}
-
-function refreshDL(e){
-
-	var sender = (e && e.target) || (window.event && window.event.srcElement);
-	var prefix = (sender.id).substring(0,5);
-	var c = document.getElementById((sender.id).substring(0,4)).className;
-	var $ = function( id ) { return document.getElementById( prefix + id ); };
-	if (!sanitycheck(prefix)) return;
-	var str = +$('iStr').value;
-	var agi = +$('iAgi').value;
-	var vit = +$('iVit').value;
-	var ene = +$('iEne').value;
-	var cmd = +$('iCmd').value;
-	var lvl = +$('iLevel').value;
-	var reset = +$('iResets').value;
-	var pvida = +$('iSVida').value;
-	var pdimi = +$('iSDiminui').value;
-	var pddi = +$('iSDDI').value;
-	var ppvm = +$('iSPvm').value;
-	var wpmin = 0;
-	var wpmax = 0;
-	if (+$('iSWpmin').value > 0)
-		wpmin = +$('iSWpmin').value;
-	if (+$('iSWpmax').value > 0)
-		wpmax = +$('iSWpmax').value;
-	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
-	var lasa = +$('iSLAsa').value;
-	var imp = +$('iSCImp').checked;
-	var addwp = +$('iSCStaff').checked;
-	var addpendant = +$('iSCPendant').checked;
-	var dmgbuff = 0;
-	var defbuff = 0;
-	if(+$('iBuffME').value > 0){
-		dmgbuff = ((+$('iBuffME').value / 7) + 3) | 0;
-		defbuff = ((+$('iBuffME').value / 8) + 2) | 0;
+	if(c != 'sm'){
+		$('oMinphyDmg').value = objDmg.pmindmg;
+		$('oMaxphyDmg').value = objDmg.pmaxdmg;
+		$('oExcphyDmg').value = objDmg.pexcdmg;
 	}
-	var sample = +$('iSampledmg').value;
-
-	var pontos = calcPontos(c, reset, lvl, str, agi, vit, ene);
-	var objAsa = {iatasa:0,Tiatasa:0,idfasa:0,Tidfasa:0,absasa:0,Tabsasa:0, lasa:lasa, tasa:tasa};
-	var speed = calcSpeed(c, agi);
-	speed += calcAsa(objAsa);
-	var hp = calcHP(c, lvl, vit, pvida);	
-	var mp = calcMP(c, lvl, ene);
-	var ag = calcAG(c, ene, vit, agi, str);
-	var def = calcDef(c, agi, defbuff, objAsa);
-	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi);
-	var sd = calcSD(str, agi, vit, ene, cmd, def, lvl);
-	
-	var objDmg = {pmindmg:0,pmaxdmg:0,pexcdmg:0};
-	var objOpt = {pen:addpendant, stf:addwp, imp:imp,iatasa:objAsa.iatasa, dmgbuff:dmgbuff, wpmin:wpmin, wpmax:wpmax};
-	calcDmg(c, objDmg, objOpt, str, agi, ene, 0);
-
-	var objRate = {pvmdr:0, pvmar:0, pvpdr:0, pvpar:0, ppvm:ppvm};
-	calcRate(c, objRate, lvl, agi, str);
-
-	$('oPontos').value = pontos;
-	$('oMinphyDmg').value = objDmg.pmindmg;
-	$('oMaxphyDmg').value = objDmg.pmaxdmg;
-	$('oExcphyDmg').value = objDmg.pexcdmg;
-	$('oFBMinphyDmg').value = objDmg.fbmindmg;
-	$('oFBMaxphyDmg').value = objDmg.fbmaxdmg;
-	$('oFBExcphyDmg').value = objDmg.fbexcdmg;
-	$('oHP').value = hp;
-	$('oMP').value = mp;
-	$('oAG').value = ag;
-	$('oSD').value = sd;
-	$('oDef').value = def;
-	$('oDefp').value = sample;
-	$('oSpeed').value = speed;
-	$('oPvmDr').value = objRate.pvmdr;
-	$('oPvmAr').value = objRate.pvmar;
-	$('oPvpDr').value = objRate.pvpdr;
-	$('oPvpAr').value = objRate.pvpar;
-}
-
-function refreshBK(e){
-
-	var sender = (e && e.target) || (window.event && window.event.srcElement);
-	var prefix = (sender.id).substring(0,5);
-	var c = document.getElementById((sender.id).substring(0,4)).className;
-	var $ = function( id ) { return document.getElementById( prefix + id ); };
-	if (!sanitycheck(prefix)) return;
-	var str = +$('iStr').value;
-	var agi = +$('iAgi').value;
-	var vit = +$('iVit').value;
-	var ene = +$('iEne').value;
-	var lvl = +$('iLevel').value;
-	var reset = +$('iResets').value;
-	var pvida = +$('iSVida').value;
-	var pdimi = +$('iSDiminui').value;
-	var pddi = +$('iSDDI').value;
-	var ppvm = +$('iSPvm').value;
-	var wpmin = 0;
-	var wpmax = 0;
-	if (+$('iSWpmin').value > 0)
-		wpmin = +$('iSWpmin').value;
-	if (+$('iSWpmax').value > 0)
-		wpmax = +$('iSWpmax').value;
-	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
-	var lasa = +$('iSLAsa').value;
-	var imp = +$('iSCImp').checked;
-	var addwp = +$('iSCStaff').checked;
-	var addpendant = +$('iSCPendant').checked;
-	var dmgbuff = 0;
-	var defbuff = 0;
-	if(+$('iBuffME').value > 0){
-		dmgbuff = ((+$('iBuffME').value / 7) + 3) | 0;
-		defbuff = ((+$('iBuffME').value / 8) + 2) | 0;
+	if(c == 'dl'){
+		$('oFBMinphyDmg').value = objDmg.fbmindmg;
+		$('oFBMaxphyDmg').value = objDmg.fbmaxdmg;
+		$('oFBExcphyDmg').value = objDmg.fbexcdmg;
 	}
-	var sample = +$('iSampledmg').value;
+	if(c == 'bk')
+		$('oCBDmg').value = objDmg.cbdmg;
 
-	var pontos = calcPontos(c, reset, lvl, str, agi, vit, ene);
-	var objAsa = {iatasa:0,Tiatasa:0,idfasa:0,Tidfasa:0,absasa:0,Tabsasa:0, lasa:lasa, tasa:tasa};
-	var speed = calcSpeed(c, agi);
-	speed += calcAsa(objAsa);
-	var hp = calcHP(c, lvl, vit, pvida);	
-	var mp = calcMP(c, lvl, ene);
-	var ag = calcAG(c, ene, vit, agi, str);
-	var def = calcDef(c, agi, defbuff, objAsa);
-	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi);
-	var sd = calcSD(str, agi, vit, ene, 0, def, lvl);
-	
-	var objDmg = {pmindmg:0,pmaxdmg:0,pexcdmg:0};
-	var objOpt = {pen:addpendant, stf:addwp, imp:imp,iatasa:objAsa.iatasa, dmgbuff:dmgbuff, wpmin:wpmin, wpmax:wpmax};
-	calcDmg(c, objDmg, objOpt, str, agi, ene, 0);
-
-	var objRate = {pvmdr:0, pvmar:0, pvpdr:0, pvpar:0, ppvm:ppvm};
-	calcRate(c, objRate, lvl, agi, str);
-
-	$('oPontos').value = pontos;
-	$('oMinphyDmg').value = objDmg.pmindmg;
-	$('oMaxphyDmg').value = objDmg.pmaxdmg;
-	$('oExcphyDmg').value = objDmg.pexcdmg;
-	$('oCBDmg').value = objDmg.cbdmg;
 	$('oHP').value = hp;
 	$('oMP').value = mp;
 	$('oAG').value = ag;
@@ -832,4 +678,11 @@ function refreshBK(e){
 	$('oPvmAr').value = objRate.pvmar;
 	$('oPvpDr').value = objRate.pvpdr;
 	$('oPvpAr').value = objRate.pvpar;
+	if(c == 'me'){
+		$('oBuffRed').value = red;
+		$('oBuffGreen').value = green;
+		$('oBuffBlue').value = blue;
+	}
+	var objBug = {mp:mp, speed:speed};
+	bugcheck(c, objBug, prefix);
 }

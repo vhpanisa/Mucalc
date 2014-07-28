@@ -10,7 +10,7 @@
 	<!-- COMEÇO DOS MODELOS -->
 	<article style="display:none">
 		<section id="modelMG">
-			<div onclick="refreshMG()" onkeyup="refreshMG()">
+			<div onclick="refresh()" onkeyup="refresh()">
 				<h2><a href="#">MG</a></h2>
 				<fieldset>
 					<legend>Input</legend>
@@ -77,7 +77,7 @@
 					<tr>
 						<td colspan="2">
 							<label><input id="iSCImp" type="checkbox"/>Imp (30%)</label>
-							<label><input id="iSCStaff" type="checkbox"/>Arma (2%)</label>
+							<label><input id="iSCWp" type="checkbox"/>Arma (2%)</label>
 							<label><input id="iSCPendant" type="checkbox"/>Pendant (2%)</label>
 						</td>
 					</tr>
@@ -162,7 +162,7 @@
 		</div>
 	</section>
 	<section id="modelDL">
-		<div onclick="refreshDL()" onkeyup="refreshDL()">
+		<div onclick="refresh()" onkeyup="refresh()">
 			<h2><a href="#">DL</a></h2>
 			<fieldset>
 				<legend>Input</legend>
@@ -228,7 +228,7 @@
 				<tr>
 					<td colspan="2">
 						<label><input id="iSCImp" type="checkbox"/>Imp (30%)</label>
-						<label><input id="iSCStaff" type="checkbox"/>Arma (2%)</label>
+						<label><input id="iSCWp" type="checkbox"/>Arma (2%)</label>
 						<label><input id="iSCPendant" type="checkbox"/>Pendant (2%)</label>
 					</td>
 				</tr>
@@ -313,7 +313,7 @@
 	</div>
 </section>
 <section id="modelBK">
-	<div onclick="refreshBK()" onkeyup="refreshBK()">
+	<div onclick="refresh()" onkeyup="refresh()">
 	<h2><a href="#">BK</a></h2>
 		<fieldset>
 			<legend>Input</legend>
@@ -377,7 +377,7 @@
 			<tr>
 				<td colspan="2">
 					<label><input id="iSCImp" type="checkbox"/>Imp (30%)</label>
-					<label><input id="iSCStaff" type="checkbox"/>Arma (2%)</label>
+					<label><input id="iSCWp" type="checkbox"/>Arma (2%)</label>
 					<label><input id="iSCPendant" type="checkbox"/>Pendant (2%)</label>
 				</td>
 			</tr>
@@ -458,7 +458,7 @@
 </div>
 </section>
 <section id="modelME">
-	<div onclick="refreshME()" onkeyup="refreshME()">
+	<div onclick="refresh()" onkeyup="refresh()">
 		<h2><a href="#">ME</a></h2>
 		<fieldset>
 			<legend>Input</legend>
@@ -497,10 +497,10 @@
 				<tr>
 					<td>Dano Arco</td>
 					<td>
-						Min <input value="0" min="0" id="iSBowmin" type="number">
+						Min <input value="0" min="0" id="iSWpmin" type="number">
 					</td>
 					<td>
-						Max <input value="0" min="0" id="iSBowmax" type="number">
+						Max <input value="0" min="0" id="iSWpmax" type="number">
 					</td>
 				</tr>
 				<tr>
@@ -522,7 +522,7 @@
 			<tr>
 				<td colspan="2">
 					<label><input id="iSCImp" type="checkbox"/>Imp (30%)</label>
-					<label><input id="iSCBow" type="checkbox"/>Arco (2%)</label>
+					<label><input id="iSCWp" type="checkbox"/>Arco (2%)</label>
 					<label><input id="iSCPendant" type="checkbox"/>Pendant (2%)</label>
 				</td>
 			</tr>
@@ -558,9 +558,9 @@
 				<td>Dano Mínimo</td><td>Dano Máximo</td><td>Dano Excelente</td>
 			</tr>
 			<tr>
-				<td><input id="oMinDmg" type="text" disabled="true" /></td>
-				<td><input id="oMaxDmg" type="text" disabled="true" /></td>
-				<td><input id="oExcDmg" type="text" disabled="true" /></td>
+				<td><input id="oMinphyDmg" type="text" disabled="true" /></td>
+				<td><input id="oMaxphyDmg" type="text" disabled="true" /></td>
+				<td><input id="oExcphyDmg" type="text" disabled="true" /></td>
 			</tr>
 			<tr>
 				<td>SD</td><td><input id="oSD" type="text" disabled="true"></td>
@@ -624,7 +624,7 @@
 </div>
 </section>
 <section id="modelSM">
-	<div onclick="refreshSM()" onkeyup="refreshSM()">
+	<div onclick="refresh()" onkeyup="refresh()">
 		<h2><a href="#">SM</a></h2>
 		<fieldset>
 			<legend>Input</legend>
@@ -682,7 +682,7 @@
 			<tr>
 				<td colspan="2">
 					<label><input id="iSCImp" type="checkbox"/>Imp (30%)</label>
-					<label><input id="iSCStaff" type="checkbox"/>Staff (2%)</label>
+					<label><input id="iSCWp" type="checkbox"/>Staff (2%)</label>
 					<label><input id="iSCPendant" type="checkbox"/>Pendant (2%)</label>
 				</td>
 			</tr>
@@ -715,9 +715,9 @@
 				<td>Dano Mínimo</td><td>Dano Máximo</td><td>Dano Excelente</td>
 			</tr>
 			<tr>
-				<td><input id="oMinDmg" type="text" disabled="true" /></td>
-				<td><input id="oMaxDmg" type="text" disabled="true" /></td>
-				<td><input id="oExcDmg" type="text" disabled="true" /></td>
+				<td><input id="oMinwizDmg" type="text" disabled="true" /></td>
+				<td><input id="oMaxwizDmg" type="text" disabled="true" /></td>
+				<td><input id="oExcwizDmg" type="text" disabled="true" /></td>
 			</tr>
 			<tr>
 				<td>SD</td><td><input id="oSD" type="text" disabled="true"></td>
