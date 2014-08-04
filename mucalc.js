@@ -94,7 +94,7 @@ function bugvelo(c, speed){
 			return 1;
 		else if(speed >= 833 && speed <= 1040)
 			return 0;
-		else if(speed >= 1040 && speed <= 21000)
+		else if(speed >= 1040 && speed <= 2100)
 			return 1;
 		else if(speed >= 1400 && speed <= 1706)
 			return 0;
