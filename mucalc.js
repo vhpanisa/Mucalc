@@ -222,7 +222,12 @@ function addTab(){
 	window.location.href = '#'+ newTabID;
 }
 
-function calcSample(sample, def, absasa, pdimi, pddi){
+function calcSample(sample, def, absasa, pdimi, pddi, pdeze){
+
+	for (var i = 0; i < pdeze; i++) {
+		def = (def*1.16);
+	}
+
 	sample -= def;
 	sample = sample * (1-absasa);
 
@@ -591,6 +596,7 @@ function refresh(e){
 	var pvida = +$('iSVida').value;
 	var pdimi = +$('iSDiminui').value;
 	var pddi = +$('iSDDI').value;
+	var pdeze = +$('iSDeze').value;
 	var ppvm = +$('iSPvm').value;
 	if(c == 'sm' || c == 'mg')
 		var staff = (+$('iSStaff').value) / 100;
@@ -638,7 +644,7 @@ function refresh(e){
 	var mp = calcMP(c, lvl, ene);
 	var ag = calcAG(c, objAttr);
 	var def = calcDef(c, agi, defbuff, objAsa);
-	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi);
+	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi, pdeze);
 	var sd = calcSD(objAttr, def, lvl);
 
 	var objDmg = {};
