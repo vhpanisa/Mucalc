@@ -1,41 +1,12 @@
 Checklist
 =========
-
-[ ] Formulas de BK
-[X] Formulas de SM
-[X] Formulas de ME
-[ ] Formulas de MG
-[ ] Formulas de DL
-
-[X] Add Vida
-[X] Add Diminui
 [ ] Add Reflete
-[X] Add PvM
-[ ] Add DDI
 [ ] Add Ratio
-
 [ ] Buff BK
 [ ] Buff SM
 [X] Buff ME
 [ ] Buff DL
-
-[ ] Arma de BK
-[X] Arma de SM
-[X] Arma de ME
-[ ] Arma de MG
-[ ] Arma de DL
-
-[ ] Skill de BK
-[ ] Skill de SM
-[ ] Skill de ME
-[ ] Skill de MG
-[ ] Skill de DL
-
-[ ] Asa de BK
-[ ] Asa de SM
-[ ] Asa de ME
-[ ] Asa de MG
-[ ] Capa de DL
+[ ] Asas
 
 BK
 ==
@@ -51,10 +22,8 @@ BK
 [x] PvP attack rate = lvl*3+agi*4.5
 [X] HP = 35+(lvl-1)*2+vit*3
 [X] Mana = 10+(lvl-1)*0.5+ene
-[ ] Mana regen = mana/27.5
 [X] SD = (str+agi+vit+ene)*1.2+defense/2+(lvl*lvl)/30
 [X] AG = ene+vit*0.3+agi*0.2+str*0.15
-[ ] AG regen = 2+AG/20
 [X] Skill % = 200+ene/10
 [ ] Fortitude % = 12+vit/100+ene/20
 [ ] Fenrir base min dmg = 45+str/3+agi/5+vit/5+ene/6
@@ -73,55 +42,12 @@ SM
 [X] PvP attack rate = lvl*3+agi*4
 [X] HP = 30+(lvl-1)+vit*2
 [X] Mana = (lvl-1)*2+ene*2
-[ ] Mana regen = mana/27.5
 [X] SD = (str+agi+vit+ene)*1.2+defense/2+(lvl*lvl)/30
 [X] AG = ene*0.2+vit*0.3+agi*0.4+str*0.2
-[ ] AG regen = 2+AG/33.3
 [ ] Soul barrier % = 10+agi/50+ene/200
 [ ] Nova max spell dmg = 1320+str/2
 [ ] Fenrir base min dmg = 60+str/5+agi/5+vit/7+ene/3
 [ ] Fenrir base max dmg = 90+str/5+agi/5+vit/7+ene/3
-
-ME
-==
-
-[X] Min dmg = str/14+agi/7
-[X] Max dmg = str/8+agi/4
-[X] Speed = agi/50
-[X] Defense = agi/10
-[X] PvM defense rate = agi/4
-[X] PvM attack rate = lvl*5+(agi*3)/2+str/4
-[X] PvP defense rate = lvl*2+agi*0.1
-[X] PvP attack rate = lvl*3+agi*0.6
-[X] HP = 40+(lvl-1)+vit*2
-[X] Mana = 6+(lvl*1.5)+(ene*1.5)
-[ ] Mana regen = mana/27.5
-[X] SD = (str+agi+vit+ene)*1.2+defense/2+(lvl*lvl)/30
-[X] AG = ene*0.2+vit*0.3+agi*0.2+str*0.3
-[ ] AG regen = 2+AG/33.33
-[X] Dmg buff = ene/7+3
-[X] Def buff = ene/8+2
-[X] Heal = ene/5+5
-
-MG
-==
-
-[X] Min dmg = str/6+ene/12
-[X] Max dmg = str/4+ene/8
-[X] Min wiz dmg = ene/9
-[X] Max wiz dmg = ene/4
-[X] Speed = agi/15
-[X] Defense = agi/5
-[X] PvM defense rate = agi/3
-[X] PvM attack rate = lvl*5+(agi*3)/2+str/4
-[X] PvP defense rate = lvl*2+agi*0.25
-[X] PvP attack rate = lvl*3+agi*3.5
-[X] HP = 58+(lvl-1)+vit*2
-[X] Mana = 8+(lvl-1)+ene*2
-[ ] Mana regen = mana/27.5
-[X] SD = (str+agi+vit+ene)*1.2+defense/2+(lvl*lvl)/30
-[X] AG = ene*0.15+vit*0.3+agi*0.25+str*0.2
-[ ] AG regen = 1.9+AG/33
 
 DL
 ==
@@ -136,10 +62,8 @@ DL
 [X] PvP attack rate = lvl*3+agi*4
 [X] HP = 50+(lvl-1)*1.5+vit*2
 [X] Mana = 40+(lvl-1)+(ene-15)*1.5
-[ ] Mana regen = mana/27.5
 [X] SD = (str+agi+vit+ene+cmd)*1.2+defense/2+(lvl*lvl)/30
 [X] AG = ene*0.15+vit*0.1+agi*0.2+str*0.3+cmd*0.3
-[ ] AG regen = 1.9+AG/33
 [X] Skill % = 200+ene/20
 [ ] Critical dmg = cmd/25+str/30
 [ ] Fireburst bonus min dmg = 100+str/25+ene/50
@@ -149,28 +73,3 @@ DL
 [ ] Raven min dmg = 180+ravenLvl*15+cmd/8
 [ ] Raven max dmg = 200+ravenLvl*15+cmd/4
 [ ] Guild size = lvl/10+cmd/10
-
-[ ] Bug de Agilidade SM
-======================
-
-00025 ~ 04200 = não buga
-04300 ~ 04400 = buga (mas sai com uniria)
-04500 ~ 05700 = não buga
-05800 ~ 06500 = buga (mas sai com uniria)
-06600 ~ 08200 = não buga
-08300 ~ 09900 = buga (mas sai com uniria)
-10000 ~ 10600 = buga (mas não sai com uniria)
-10700 = buga (mas sai com uniria)
-10800 ~ 13200 = não buga
-13300 ~ 15600 = buga (mas sai com uniria)
-15700 ~ 23100 = buga (mas não sai com uniria)
-23200 = buga (mas sai com uniria)
-23300 ~ 28200 = não buga
-28300 ~ 32500 = buga (mas sai com uniria)
-
-obs: valores testados de 100 em 100
-obs2: testados com uma staff com 30 de velocidade
-
-bug d energia, sem peças de mana = 32.368
-Best max energia 32.364
-best max energia ancient 32.328

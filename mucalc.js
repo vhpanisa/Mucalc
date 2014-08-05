@@ -52,35 +52,33 @@ function bugmp(mp){
 function bugvelo(c, speed){
 	switch(c){
 		case 'sm':
-		if(speed < 436)
+		if(speed < 455)
 			return 0;
-		else if(speed >= 446 && speed <= 456)
+		else if(speed >= 455 && speed <= 479)
 			return 1;
-		else if(speed >= 456 && speed <= 586)
+		else if(speed >= 480 && speed <= 586)// até 617)
 			return 0;
-		else if(speed >= 596 && speed <= 666)
+		else if(speed >= 587 && speed <= 688)
 			return 1;
-		else if(speed >= 676 && speed <= 836)
+		else if(speed >= 689 && speed <= 854)
 			return 0;
-		else if(speed >= 846 && speed <= 1006)
+		else if(speed >= 855 && speed <= 1006)// até 1037)
 			return 1;
-		else if(speed >= 1016 && speed <= 1076)
+		else if(speed >= 1007 && speed <= 1099)
 			return 2;
-		else if (speed == 1086)
+		else if(speed >= 1100 && speed <= 1104)
 			return 1;
-		else if(speed >= 1096 && speed <= 1336)
+		else if(speed >= 1105 && speed <= 1354)
 			return 0;
-		else if(speed >= 1346 && speed <= 1576)
+		else if(speed >= 1355 && speed <= 1599)
 			return 1;
-		else if(speed >= 1586 && speed <= 2326)
+		else if(speed >= 1600 && speed <= 2349)
 			return 2;
-		else if (speed == 2336)
+		else if(speed >= 2350 && speed <= 2354)
 			return 1;
-		else if(speed >= 2346 && speed <= 2836)
+		else if(speed >= 2355 && speed <= 2854)
 			return 0;
-		else if(speed >= 2846)
-			return 1;
-		else
+		else if(speed >= 2855)
 			return 1;
 		break;
 		case 'mg':
@@ -138,7 +136,7 @@ function bugcheck(c, objBug, prefix){
 	if(bugmp(objBug.mp))
 		$('oMP').style['background-color'] = 'yellow';
 
-	switch(bugvelo(c,objBug.speed)){
+	switch(bugvelo(c, objBug.speed)){
 		case 0:
 		$('oSpeed').style['background-color'] = '';
 		break;
@@ -222,11 +220,7 @@ function addTab(){
 	window.location.href = '#'+ newTabID;
 }
 
-function calcSample(sample, def, absasa, pdimi, pddi, pdeze){
-
-	for (var i = 0; i < pdeze; i++) {
-		def = (def*1.16);
-	}
+function calcSample(sample, def, absasa, pdimi, pddi){
 
 	sample -= def;
 	sample = sample * (1-absasa);
@@ -277,7 +271,6 @@ function calcAsa(objAsa){
 		objAsa.absasa = 12;
 		speed = 15;
 		break;
-
 		case 2:
 		objAsa.Tiatasa = 1;
 		objAsa.Tidfasa = 2;
@@ -301,7 +294,7 @@ function calcAsa(objAsa){
 	return speed;
 }
 
-function calcDef (c, agi, defbuff, objAsa) {
+function calcDef (c, agi, defbuff, objAsa, pdeze, bdef) {
 	var def = 0;
 	switch(c){
 		case 'bk':
@@ -324,6 +317,11 @@ function calcDef (c, agi, defbuff, objAsa) {
 	def += defbuff;
 	def += (objAsa.Tidfasa * objAsa.lasa);
 
+	for (var i = 0; i < pdeze; i++) {
+		def = (def*1.16);
+	}
+
+	def *= (1+(bdef/100));
 	return (def | 0);
 }
 
@@ -598,6 +596,7 @@ function refresh(e){
 	var pddi = +$('iSDDI').value;
 	var pdeze = +$('iSDeze').value;
 	var ppvm = +$('iSPvm').value;
+	var bdef = +$('iSSet').options[$('iSSet').selectedIndex].value;
 	if(c == 'sm' || c == 'mg')
 		var staff = (+$('iSStaff').value) / 100;
 	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
@@ -643,8 +642,8 @@ function refresh(e){
 	var hp = calcHP(c, lvl, vit, pvida);	
 	var mp = calcMP(c, lvl, ene);
 	var ag = calcAG(c, objAttr);
-	var def = calcDef(c, agi, defbuff, objAsa);
-	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi, pdeze);
+	var def = calcDef(c, agi, defbuff, objAsa, pdeze, bdef);
+	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi);
 	var sd = calcSD(objAttr, def, lvl);
 
 	var objDmg = {};
