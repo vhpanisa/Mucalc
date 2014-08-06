@@ -57,75 +57,75 @@ function bugvelo(c, speed){
 		else if(speed >= 455 && speed <= 479)
 			return 1;
 		else if(speed >= 480 && speed <= 586)// até 617)
-			return 0;
-		else if(speed >= 587 && speed <= 688)
-			return 1;
-		else if(speed >= 689 && speed <= 854)
-			return 0;
+return 0;
+else if(speed >= 587 && speed <= 688)
+	return 1;
+else if(speed >= 689 && speed <= 854)
+	return 0;
 		else if(speed >= 855 && speed <= 1006)// até 1037)
-			return 1;
-		else if(speed >= 1007 && speed <= 1099)
-			return 2;
-		else if(speed >= 1100 && speed <= 1104)
-			return 1;
-		else if(speed >= 1105 && speed <= 1354)
-			return 0;
-		else if(speed >= 1355 && speed <= 1599)
-			return 1;
-		else if(speed >= 1600 && speed <= 2349)
-			return 2;
-		else if(speed >= 2350 && speed <= 2354)
-			return 1;
-		else if(speed >= 2355 && speed <= 2854)
-			return 0;
-		else if(speed >= 2855)
-			return 1;
-		break;
-		case 'mg':
-		if(speed <= 526)
-			return 0;
-		else if(speed >= 526 && speed <= 553)
-			return 1;
-		else if(speed >= 553 && speed <= 726)
-			return 0;
-		else if(speed >= 726 && speed <= 833)
-			return 1;
-		else if(speed >= 833 && speed <= 1040)
-			return 0;
-		else if(speed >= 1040 && speed <= 1400)
-			return 1;
-		else if(speed >= 1400 && speed <= 1706)
-			return 0;
-		else if(speed >= 1706 && speed <= 2033)
-			return 1;
-		else if(speed >= 2033)
-			return 2;
-		else
-			return 1;
-		break;
-		case 'dl':
-		if(speed <= 190)
-			return 0;
-		else if (speed == 200)
-			return 1;
-		else if(speed >= 210 && speed <= 270)
-			return 0;
-		else if(speed >= 280 && speed <= 310)
-			return 1;
-		else if(speed >= 320 && speed <= 390)
-			return 0;
-		else if(speed >= 400 && speed <= 520)
-			return 1;
-		else if(speed >= 530 && speed <= 640)
-			return 0;
-		else if(speed >= 650 && speed <= 1140)
-			return 1;
-		else if(speed >= 1150 && speed <= 1390)
-			return 0;
-		else if(speed >= 1400 && speed <= 3250)
-			return 1;
-		break;
-	}
+return 1;
+else if(speed >= 1007 && speed <= 1099)
+	return 2;
+else if(speed >= 1100 && speed <= 1104)
+	return 1;
+else if(speed >= 1105 && speed <= 1354)
+	return 0;
+else if(speed >= 1355 && speed <= 1599)
+	return 1;
+else if(speed >= 1600 && speed <= 2349)
+	return 2;
+else if(speed >= 2350 && speed <= 2354)
+	return 1;
+else if(speed >= 2355 && speed <= 2854)
+	return 0;
+else if(speed >= 2855)
+	return 1;
+break;
+case 'mg':
+if(speed <= 526)
+	return 0;
+else if(speed >= 526 && speed <= 553)
+	return 1;
+else if(speed >= 553 && speed <= 726)
+	return 0;
+else if(speed >= 726 && speed <= 833)
+	return 1;
+else if(speed >= 833 && speed <= 1040)
+	return 0;
+else if(speed >= 1040 && speed <= 1400)
+	return 1;
+else if(speed >= 1400 && speed <= 1706)
+	return 0;
+else if(speed >= 1706 && speed <= 2033)
+	return 1;
+else if(speed >= 2033)
+	return 2;
+else
+	return 1;
+break;
+case 'dl':
+if(speed <= 190)
+	return 0;
+else if (speed == 200)
+	return 1;
+else if(speed >= 210 && speed <= 270)
+	return 0;
+else if(speed >= 280 && speed <= 310)
+	return 1;
+else if(speed >= 320 && speed <= 390)
+	return 0;
+else if(speed >= 400 && speed <= 520)
+	return 1;
+else if(speed >= 530 && speed <= 640)
+	return 0;
+else if(speed >= 650 && speed <= 1140)
+	return 1;
+else if(speed >= 1150 && speed <= 1390)
+	return 0;
+else if(speed >= 1400 && speed <= 3250)
+	return 1;
+break;
+}
 }
 
 function bugcheck(c, objBug, prefix){
@@ -220,7 +220,7 @@ function addTab(){
 	window.location.href = '#'+ newTabID;
 }
 
-function calcSample(sample, def, absasa, pdimi, pddi){
+function calcSample(sample, def, absasa, pdimi, pddi, buffms){
 
 	sample -= def;
 	sample = sample * (1-absasa);
@@ -231,6 +231,7 @@ function calcSample(sample, def, absasa, pdimi, pddi){
 	for (var i = 0; i < pddi; i++) {
 		sample = (sample*0.93);
 	}
+	sample = sample * (1-(0.7*buffms));
 	if(sample < 0) sample = 0;
 	return (sample | 0);
 }
@@ -315,6 +316,7 @@ function calcDef (c, agi, defbuff, objAsa, pdeze, bdef) {
 	}
 
 	def += defbuff;
+	def += 800; //Defesa média dos sets
 	def += (objAsa.Tidfasa * objAsa.lasa);
 
 	for (var i = 0; i < pdeze; i++) {
@@ -325,7 +327,7 @@ function calcDef (c, agi, defbuff, objAsa, pdeze, bdef) {
 	return (def | 0);
 }
 
-function calcHP (c, lvl, vit, pvida) {
+function calcHP (c, lvl, vit, pvida, buffgf) {
 	var hp = 0;
 	switch(c){
 		case 'bk':
@@ -346,8 +348,10 @@ function calcHP (c, lvl, vit, pvida) {
 	}
 
 	for (var i = 0; i < pvida; i++) {
-		hp = hp*1.05;
+		hp = hp*1.04;
 	}
+
+	hp = hp * (1+(1.30*buffgf));
 
 	return (hp | 0);
 }
@@ -566,6 +570,9 @@ function calcRate(c, objRate, lvl, objAttr){
 		objRate.pvmdr *= 1.10;
 	}
 
+	objRate.pvpdr = objRate.pvpdr + (objRate.def*0.10)
+
+	objRate.pvpdr |= 0;
 	objRate.pvmdr |= 0;
 }
 
@@ -604,6 +611,8 @@ function refresh(e){
 	var imp = +$('iSCImp').checked;
 	var addwp = +$('iSCWp').checked;
 	var addpendant = +$('iSCPendant').checked;
+	var buffms = +$('iSCMS').checked;
+	var buffgf = +$('iSCGF').checked;
 	var dmgbuff = 0;
 	var defbuff = 0;
 	var sample = +$('iSampledmg').value;
@@ -639,18 +648,18 @@ function refresh(e){
 	var objAsa = {iatasa:0,Tiatasa:0,idfasa:0,Tidfasa:0,absasa:0,Tabsasa:0, lasa:lasa, tasa:tasa};
 	var speed = calcSpeed(c, agi);
 	speed += calcAsa(objAsa);
-	var hp = calcHP(c, lvl, vit, pvida);	
+	var hp = calcHP(c, lvl, vit, pvida, buffgf);	
 	var mp = calcMP(c, lvl, ene);
 	var ag = calcAG(c, objAttr);
 	var def = calcDef(c, agi, defbuff, objAsa, pdeze, bdef);
-	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi);
+	sample = calcSample(sample, def, objAsa.absasa, pdimi, pddi, buffms);
 	var sd = calcSD(objAttr, def, lvl);
 
 	var objDmg = {};
 	var objOpt = {pen:addpendant, wp:addwp, stfp:staff, imp:imp, iatasa:objAsa.iatasa, dmgbuff:dmgbuff, wpmin:wpmin, wpmax:wpmax};
 	calcDmg(c, objDmg, objOpt, str, agi, ene, cmd);
 
-	var objRate = {pvmdr:0, pvmar:0, pvpdr:0, pvpar:0, ppvm:ppvm};
+	var objRate = {pvmdr:0, pvmar:0, pvpdr:0, pvpar:0, ppvm:ppvm, def:def};
 	calcRate(c, objRate, lvl, objAttr);
 
 	$('oPontos').value = pontos;
