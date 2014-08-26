@@ -635,7 +635,6 @@ function refresh(e){
 			$('iBuffME').value = $('iEne').value;
 			$('iBuffME').disabled = true;
 		}else{
-			$('iBuffME').value = 0;
 			$('iBuffME').disabled = false;
 		}
 	}
