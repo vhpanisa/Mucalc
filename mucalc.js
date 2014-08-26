@@ -239,7 +239,7 @@ function calcSample(sample, def, absasa, pdimi, pddi, buffms, gangel){
 	return (sample | 0);
 }
 
-function calcPontos (c, reset, lvl, str, agi, vit, ene) {
+function calcPontos (c, reset, vip, lvl, str, agi, vit, ene) {
 
 	var exreset = 0;
 	if (reset > 250){
@@ -250,13 +250,13 @@ function calcPontos (c, reset, lvl, str, agi, vit, ene) {
 	var pontos = 0;
 	switch(c){
 		case 'mg':
-		pontos = (100 + (340 * reset) + (exreset * 12) + (7 * (lvl-1)) - (str+agi+vit+ene));
+		pontos = (100 + ((280+(60*vip)) * reset) + (exreset * 12) + (7 * (lvl-1)) - (str+agi+vit+ene));
 		break;
 		case 'dl':
-		pontos = (100 + (280 * reset) + (exreset * 12) + (7 * (lvl-1)) - (str+agi+vit+ene));
+		pontos = (100 + ((220+(60*vip)) * reset) + (exreset * 12) + (7 * (lvl-1)) - (str+agi+vit+ene));
 		break;
 		default:
-		pontos = (100 + (280 * reset) + (exreset * 12) + (6 * (lvl-1)) - (str+agi+vit+ene));
+		pontos = (100 + ((220+(60*vip)) * reset) + (exreset * 12) + (6 * (lvl-1)) - (str+agi+vit+ene));
 		break;
 	}
 
@@ -601,6 +601,7 @@ function refresh(e){
 
 	var lvl = +$('iLevel').value;
 	var reset = +$('iResets').value;
+	var vip = +$('iSCVip').checked;
 	var pvida = +$('iSVida').value;
 	var pdimi = +$('iSDiminui').value;
 	var pddi = +$('iSDDI').value;
@@ -648,7 +649,7 @@ function refresh(e){
 	var	green = ((ene/8)+2) | 0;
 	var	blue = ((ene/5)+5) | 0;
 
-	var pontos = calcPontos(c, reset, lvl, str, agi, vit, ene);
+	var pontos = calcPontos(c, reset, vip, lvl, str, agi, vit, ene);
 	var objAsa = {iatasa:0,Tiatasa:0,idfasa:0,Tidfasa:0,absasa:0,Tabsasa:0, lasa:lasa, tasa:tasa};
 	var speed = calcSpeed(c, agi);
 	speed += calcAsa(objAsa);
