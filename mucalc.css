@@ -157,13 +157,19 @@ select
 	vertical-align: top;
 }
 
-.innerfield
+fieldset
 {
 	display: inline-block;
-	height: 200px;
+}
+
+.innerfield
+{
+	vertical-align: middle;
+	display: inline-block;
 }
 
 .outerfield
 {
-	display: inline-block;
+
+	display: inline;
 }
