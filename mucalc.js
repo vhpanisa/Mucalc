@@ -381,6 +381,7 @@ function calcDef (c, agi, defbuff, objAsa, pdeze, bdef) {
 function calcHP (c, lvl, vit, pvida, buffgf) {
 
 	var hp = 0;
+	
 	switch(c){
 		case 'bk':
 		hp = 35+(lvl-1)*2+(vit*3);
@@ -399,13 +400,13 @@ function calcHP (c, lvl, vit, pvida, buffgf) {
 		break;
 	}
 
-	hp = hp * (1+(1.35*buffgf));
+	var extra = hp * (1.35*buffgf);
 
 	for (var i = 0; i < pvida; i++) {
 		hp = hp*1.04;
 	}
 
-	return (hp | 0);
+	return (hp+extra | 0);
 }
 
 function calcMP (c, lvl, ene) {
