@@ -158,29 +158,11 @@ function addTab(){
 	var newTab = document.createElement("section");
 	newTab.id = newTabID;
 	var aux = "";
-	switch(+$('classes').options[$('classes').selectedIndex].value){
-		case 1:
-		aux = $('modelBK').innerHTML;
-		break;
-		case 2:
-		aux = $('modelSM').innerHTML;
-		break;
-		case 3:
-		aux = $('modelME').innerHTML;
-		break;
-		case 4:
-		aux = $('modelMG').innerHTML;
-		break;
-		case 5:
-		aux = $('modelDL').innerHTML;
-		break;
-		default:
-		alert('Classe não implementada');
-		return;
-	}
+	aux = $('model').innerHTML;
 	newTab.innerHTML = aux;
 	tabs.appendChild(newTab);
-	switch(+$('classes').options[$('classes').selectedIndex].value){
+	var op = $('classes').options[$('classes').selectedIndex]
+	switch(+op.value){
 		case 1:
 		$(newTabID).classList.add('bk');
 		break;
@@ -201,15 +183,81 @@ function addTab(){
 		return;
 	}
 
-	$(newTabID).getElementsByTagName('a')[0].href = '#'+ newTabID; 
+	aux = $(newTabID).getElementsByTagName('a')[0]
+	aux.href = '#'+ newTabID; 
+	aux.innerHTML = op.text; 
+	
 
-	var matches = [];
+	var elements = $(newTabID).getElementsByTagName('table');
+	for(var i = 0; i < elements.length; i++) {
+		if(elements[i].id != 'undefined') {
+			elements[i].id = newTabID + '_' + elements[i].id;
+		}
+	}
+
+	var elements = $(newTabID).getElementsByTagName('div');
+	for(var i = 0; i < elements.length; i++) {
+		if(elements[i].id != 'undefined') {
+			elements[i].id = newTabID + '_' + elements[i].id;
+		}
+	}
+
+
+	switch(+op.value){
+		case 1:
+		$(newTabID).classList.add('bk');
+		$(newTabID + '_tblArma').innerHTML += $('pnlArma').innerHTML;
+		$(newTabID + '_tblSpec').innerHTML += $('pnlAsa').innerHTML;
+		$(newTabID + '_tblDanos').innerHTML += $('pnlDanoPhy').innerHTML;
+		$(newTabID + '_tblDanos').innerHTML += $('pnlDanoCombo').innerHTML;
+		$(newTabID + '_tblBuffs').innerHTML += $('pnlBuff').innerHTML;
+		break;
+		case 2:
+		$(newTabID).classList.add('sm');
+		$(newTabID + '_tblArma').innerHTML += $('pnlStaff').innerHTML;
+		$(newTabID + '_tblSpec').innerHTML += $('pnlAsa').innerHTML;
+		$(newTabID + '_tblDanos').innerHTML += $('pnlDanoWiz').innerHTML;
+		$(newTabID + '_tblBuffs').innerHTML += $('pnlBuff').innerHTML;
+		break;
+		case 3:
+		$(newTabID).classList.add('me');
+		$(newTabID + '_tblArma').innerHTML += $('pnlArma').innerHTML;
+		$(newTabID + '_tblSpec').innerHTML += $('pnlAsa').innerHTML;
+		$(newTabID + '_tblDanos').innerHTML += $('pnlDanoPhy').innerHTML;
+		$(newTabID + '_tblDanos').innerHTML += $('pnlBuffME').innerHTML;
+		$(newTabID + '_tblBuffs').innerHTML += $('pnlSelf').innerHTML;
+		break;
+		case 4:
+		$(newTabID).classList.add('mg');
+		$(newTabID + '_tblArma').innerHTML += $('pnlArma').innerHTML;
+		$(newTabID + '_tblArma').innerHTML += $('pnlStaff').innerHTML;
+		$(newTabID + '_tblSpec').innerHTML += $('pnlAsa').innerHTML;
+		$(newTabID + '_tblDanos').innerHTML += $('pnlDanoPhy').innerHTML;
+		$(newTabID + '_tblDanos').innerHTML += $('pnlDanoWiz').innerHTML;
+		$(newTabID + '_tblBuffs').innerHTML += $('pnlBuff').innerHTML;
+		break;
+		case 5:
+		$(newTabID).classList.add('dl');
+		$(newTabID + '_tblPontos').innerHTML += $('pnlLid').innerHTML;
+		$(newTabID + '_tblSpec').innerHTML += $('pnlCapa').innerHTML;
+		$(newTabID + '_tblArma').innerHTML += $('pnlArma').innerHTML;
+		$(newTabID + '_tblDanos').innerHTML += $('pnlDanoPhy').innerHTML;
+		$(newTabID + '_tblDanos').innerHTML += $('pnlDanoFB').innerHTML;
+		$(newTabID + '_tblBuffs').innerHTML += $('pnlBuff').innerHTML;
+		break;
+		default:
+		alert('Classe não implementada');
+		return;
+	}
+	
 	var elements = $(newTabID).getElementsByTagName('input');
 	for(var i = 0; i < elements.length; i++) {
 		if(elements[i].id != 'undefined') {
 			elements[i].id = newTabID + '_' + elements[i].id;
 		}
 	}
+
+
 
 	var elements = $(newTabID).getElementsByTagName('select');
 	for(var i = 0; i < elements.length; i++) {
@@ -331,6 +379,7 @@ function calcDef (c, agi, defbuff, objAsa, pdeze, bdef) {
 }
 
 function calcHP (c, lvl, vit, pvida, buffgf) {
+
 	var hp = 0;
 	switch(c){
 		case 'bk':
@@ -350,11 +399,11 @@ function calcHP (c, lvl, vit, pvida, buffgf) {
 		break;
 	}
 
+	hp = hp * (1+(1.35*buffgf));
+
 	for (var i = 0; i < pvida; i++) {
 		hp = hp*1.04;
 	}
-
-	hp = hp * (1+(1*buffgf));
 
 	return (hp | 0);
 }
@@ -612,10 +661,10 @@ function refresh(e){
 		var staff = (+$('iSStaff').value) / 100;
 	var tasa = +$('iSTAsa').options[$('iSTAsa').selectedIndex].value;
 	var lasa = +$('iSLAsa').value;
-	var imp = +$('iSTPet').options[$('iSTPet').selectedIndex].value == 1 ? 1 : 0;
-	var gangel = +$('iSTPet').options[$('iSTPet').selectedIndex].value == 2 ? 1 : 0;
-	var addwp = +$('iSCWp').checked;
-	var addpendant = +$('iSCPendant').checked;
+	var imp = +$('iSTPet').options[$('iSTPet').selectedIndex].value == 2 ? 1 : 0;
+	var gangel = +$('iSTPet').options[$('iSTPet').selectedIndex].value == 1 ? 1 : 0;
+	var addwp = +$('iSCWp2').checked;
+	var addpendant = +$('iSCPen2').checked;
 	var buffms = +$('iSCMS').checked;
 	var buffgf = +$('iSCGF').checked;
 	var dmgbuff = 0;
@@ -631,17 +680,24 @@ function refresh(e){
 	}
 
 	if (c == 'me'){
-		if (+$('iSCSelf').checked == 1){
-			$('iBuffME').value = $('iEne').value;
-			$('iBuffME').disabled = true;
-		}else{
-			$('iBuffME').disabled = false;
+		switch(+$('iSTBuff').options[$('iSTBuff').selectedIndex].value){
+			case 0:
+			break;
+			case 1:
+			dmgbuff = ((+$('iEne').value / 7) + 3) | 0;
+			defbuff = ((+$('iEne').value / 8) + 2) | 0;
+			break;
+			case 2:
+			dmgbuff = ((32500 / 7) + 3) | 0;
+			defbuff = ((32500 / 8) + 2) | 0;
+			break;
 		}
 	}
-
-	if(+$('iBuffME').value > 0){
-		dmgbuff = ((+$('iBuffME').value / 7) + 3) | 0;
-		defbuff = ((+$('iBuffME').value / 8) + 2) | 0;
+	else{
+		if(+$('iSCME').checked == 1){
+			dmgbuff = ((32500 / 7) + 3) | 0;
+			defbuff = ((32500 / 8) + 2) | 0;
+		}
 	}
 
 	var red = ((ene/7)+3) | 0;
