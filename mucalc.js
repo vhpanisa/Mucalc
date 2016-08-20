@@ -541,7 +541,7 @@ function calcPDmg(c, objDmg, objOpt, str, ene, agi){
 		t = 100;
 		break;
 		case 'mg':
-		t = 200;
+		t = 800;
 		break;
 		case 'dl':
 		t = 200 + (ene/20);
