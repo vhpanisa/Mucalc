@@ -298,7 +298,7 @@ function calcPontos (c, reset, vip, lvl, str, agi, vit, ene) {
 	var pontos = 0;
 	switch(c){
 		case 'mg':
-		pontos = (100 + ((280+(60*vip)) * reset) + (exreset * 12) + (7 * (lvl-1)) - (str+agi+vit+ene));
+		pontos = (100 + ((280+(76*vip)) * reset) + (exreset * 12) + (7 * (lvl-1)) - (str+agi+vit+ene));
 		break;
 		case 'dl':
 		pontos = (100 + ((220+(60*vip)) * reset) + (exreset * 12) + (7 * (lvl-1)) - (str+agi+vit+ene));
