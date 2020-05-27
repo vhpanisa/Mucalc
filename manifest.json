@@ -6,9 +6,9 @@
       "sizes": "48x48",
       "type": "image/x-icon"
     },{
-      "src": "/favicon.ico",
+      "src": "/folklore.png",
       "sizes": "192x192",
-      "type": "image/x-icon"
+      "type": "image/png"
     }],
   "start_url": "/index.html",
   "display": "standalone",
