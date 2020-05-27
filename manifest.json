@@ -2,15 +2,11 @@
   "name": "Weather",
   "short_name": "Weather",
   "icons": [{
-      "src": "/favicon.ico",
-      "sizes": "48x48",
-      "type": "image/x-icon"
-    },{
-      "src": "/folklore.png",
-      "sizes": "72x72 96x96 128x128 192x192 256x256 512x512",
+      "src": "folklore.png",
+      "sizes": "48x48 72x72 96x96 128x128 192x192 256x256 512x512",
       "type": "image/png"
     }],
-  "start_url": "/index.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#3E4EB8",
   "theme_color": "#2F3BA2"
